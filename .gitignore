@@ -1,3 +1,9 @@
+*.pyc
+*.png
+output
+revision.tex
+*.pdf
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof

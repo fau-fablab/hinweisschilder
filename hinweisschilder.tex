@@ -1,0 +1,325 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% COPYRIGHT: (C) 2012-2015 FAU FabLab and others
+% CC-BY-SA 3.0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newcommand{\basedir}{./fablab-document/}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\documentclass{\basedir/fablab-document}
+
+\fancyhf{}  % Alle Header/Footer entfernen
+
+\fancyfoot[c]{svn/einweisungen/hinweisschilder/hinweisschilder.tex}
+\usetikzlibrary{shapes,arrows} % für das flowchart
+
+\tikzstyle{rot} = [fill=red!80]
+
+
+% Knöpfe für Laser und Fernbedienung
+\newcommand{\knopf}[2]{
+    \begin{tikzpicture}[baseline={(box.base)}]
+    \node [#1] (box) { 
+        \fontsize{9pt}{9pt}\selectfont \textbf{#2}\strut
+    };
+    \end{tikzpicture}
+}
+  
+\title{Hinweisschilder}
+
+\tikzstyle{breite} = [text width=10cm, align=center, rounded corners]
+\tikzstyle{hinweisschild} = [breite, rectangle, draw, fill=black!20,
+     minimum height=4em, anchor = south]
+\tikzstyle{info} = [breite, rectangle,
+     minimum height=4em, anchor = south]
+\tikzstyle{rot} = [fill=red!60]
+\tikzstyle{gelbrot} = [top color=yellow!60,bottom color=red!60, shading=axis,shading angle=90]
+\tikzstyle{gelb} = [fill=yellow!60]
+\tikzstyle{gruen} = [fill=green!60]
+
+%\newcommand{\laserKnopf}[1]{\,\Ovalbox{\fontsize{9pt}{9pt}\selectfont \textbf{#1}}\ }
+\newcommand{\mail}[1]{\texttt{#1}}
+\newcommand{\web}[1]{\texttt{#1}}
+
+\newcommand{\riesig}{\fontsize{36pt}{36pt}\selectfont}
+\newcommand{\schild}[5]{
+	\vbox{
+		\begin{tikzpicture}[baseline={(box.base)}]
+			\node [hinweisschild,#1] (box) { 
+				\riesig \textbf{#2} \\ \vspace{0.4cm}  #3\\  \vspace{0.4cm} \large #4
+			};
+		\end{tikzpicture} \\
+		\begin{tikzpicture}[baseline={(box.base)}]
+			\node [info] (box) { 
+				#5
+			};
+		\end{tikzpicture}
+	}
+}
+
+
+% HINWEIS: die QR-Codes müssen erst generiert werden. Dazu den Tool-Namen (http://fablab.fau.de/tool/TOOLNAME) in generate-qr.py bei "maschinen" eintragen und 'make' ausführen
+\newcommand{\linkMitQR}[1]{\includegraphics[width=3cm]{./#1.png} \\ \web{http://fablab.fau.de/tool/#1}}
+
+\begin{document}
+\hyphenation{Sil-ben-tren-nung hier ein-tra-gen   immer nur erweitern   Um-lau-te ge-hen zur Zeit nicht     Betreuer   Roland   iModela    } 
+
+
+\centering
+
+
+\schild{gelbrot, text width=15cm}{CNC-Fräse}
+	{Benutzung nur mit Ein\-weisung,\\ Aufsicht erforderlich!}
+	{Bei Interesse frage einen Betreuer! \\ Je nach Einweisungsstufe sind nur bestimmte Tätigkeiten ohne Aufsicht erlaubt.}
+	{\linkMitQR{cnc-fraese}\\
+	\normalsize Ansprechpartner: AG Zerspanung, \mail{zerspanung@fablab.fau.de}}
+
+
+\schild{rot}{CNC-Fräse Roland iModela}
+	{Benutzung nur nach Rücksprache.}
+	{Im Moment gibt es leider noch keine Einweisung zu diesem Gerät. Bitte sprich mit einem Betreuer.}
+	{\linkMitQR{cnc-fraese-roland}\\
+	\normalsize Ansprechpartner: Max, \mail{technik@fablab.fau.de}}
+	
+\schild{rot}{CNC-Drehbank}
+	{noch außer Betrieb}
+	{Benutzung vorerst nur durch Michael, Philipp, Patrick, Christopher und Max.\\
+	% Starten von Jobs nur nach Freigabe durch Experten, auch wenn du eine Einweisung hast!
+	}
+	{\linkMitQR{cnc-drehbank} \\
+	\normalsize Ansprechpartner: Patrick, \mail{patrick@fablab.fau.de}}
+
+\schild{gelb}{Lasercutter}
+	{\large selbstständige \\ {\riesig Benutzung nur mit} \\  {\large unterschriebener Laser-} \vspace{0.15cm} \\ {\riesig Einweisung}}{Bei Interesse frage einfach einen Betreuer!}
+	{ \linkMitQR{lasercutter} \\
+	\normalsize Ansprechpartner: AG Laser+Plotter, \mail{laser+plotter@fablab.fau.de} }
+
+	%nicht mehr in Betrieb
+% \schild{gelb}{3D-Drucker Prusa Mendel}
+% 	{ Benutzung nur nach\\ Einweisung}{Bei Interesse frage einfach einen Betreuer!}
+% 	{\linkMitQR{3d-drucker} \\
+% 	\normalsize Ansprechpartner: Max, \mail{technik@fablab.fau.de} }
+
+\schild{gelb}{3D-Drucker\\ Makerbot Replicator 2X}
+	{ Benutzung nur mit\\ \red{unterschriebener} Einweisung}{Bei Interesse frage einen Betreuer!}
+	{\linkMitQR{3d-drucker-makerbot} \\
+	\normalsize Ansprechpartner: Timo, \mail{3ddruck@fablab.fau.de} }
+
+\schild{gelb}{3D-Drucker Ultimaker}
+	{ Benutzung nur mit\\ \red{unterschriebener} Einweisung}{Bei Interesse frage einen Betreuer!}
+	{\linkMitQR{3d-drucker-ultimaker} \\
+	\normalsize Ansprechpartner: Timo, \mail{3ddruck@fablab.fau.de} }
+
+\schild{gelb}{Platinenfertigung}
+	{{\riesig Benutzung nur mit} \\ {\riesig \red{unterschriebener} Einweisung} \vspace{0.5cm}\\ Schutzbrille tragen!}{Bei Interesse frage einfach einen Betreuer!}
+	{\linkMitQR{platinenfertigung} \\
+	\normalsize Ansprechpartner: Max, \mail{technik@fablab.fau.de} }
+
+\schild{gelb}{DuKo-Presse für Platinen}
+	{{\riesig Benutzung nur nach} \\ {\riesig Einweisung} \vspace{0.5cm}\\ Vorsichtig verwenden! \\ Werkzeug ist sehr empfindlich!}{Bei Interesse frage einfach einen Betreuer!}
+	{\linkMitQR{platinenfertigung} \\
+	\normalsize Ansprechpartner: Max, \mail{technik@fablab.fau.de} }
+
+\schild{gelb, text width=14cm}{Entlötstation}
+	{Spitzenwechsel, Reinigung, Ent\-leeren, usw. nur durch Gerätebetreuer!\\\vspace{0.5cm} Normale Benutzung ist erlaubt.}{Bei Problemen bitte an Max B, Philipp oder Patrick wenden.}
+	{%\linkMitQR{platinenfertigung} \\
+	\normalsize Ansprechpartner: Max B, Philipp, \mail{kontakt@fablab.fau.de} }
+
+	
+	
+\schild{gelb}{Elektro-Arbeitsplätze}
+	{{\riesig Benutzung der Geräte} \\ {\riesig nur nach Einweisung} \\ {\large Bei Interesse frage einfach einen Betreuer!} \vspace{0.5cm}\\ Arbeitsplatz \textbf{sauber und leer} verlassen \\ \large Werkzeug verräumen, Müll entsorgen, Kabel zurücklegen.\\ Liegengebliebene Sachen können einfach so verschwinden!!}{}
+	{\normalsize Ansprechpartner: FabLab-Aktive, \mail{kontakt@fablab.fau.de} }
+	
+	
+%\schild{rot}{Philipps Oszi}
+%	{{\riesig Benutzung der Geräte} \\ {\riesig nur nach ERLAUBNIS} \\ {\large Bei Interesse frage Philipp Hörauf} \vspace{0.5cm}\\ Tastköpfe nicht ins Breadboard stecken! \\ Tastköpfe nicht mit FabLab-Material mischen!}{}
+%{\normalsize Ansprechpartner: FabLab-Aktive, \mail{philipp@fablab.fau.de} }
+
+
+\schild{gruen}{Fundsachenkiste}
+	{{\riesig Alles mit \enquote{FFA} beschriftete ist zu verschenken.} \\\vspace{0.7cm} {\riesig Der Rest sind Fundsachen.}\\ \vspace{0.5cm} \large Hier landet der auf Tischen liegengelassene Schrott. Die Kiste wird nach jedem FabLab-Treffen stark aussortiert und der Großteil weggeschmissen.}{}
+	
+\schild{gelb}{Werkbank}
+	{{\riesig Benutzung der Werkzeuge} \\ {\riesig nur nach Einweisung} \\ {\large Bei Interesse frage einfach einen Betreuer!\\ Beachte auch die Aufschrift an der Standbohrmaschine!} \vspace{0.5cm}\\ Arbeitsplatz \textbf{sauber und leer} verlassen \\ \large Werkzeug verräumen, Müll entsorgen.\\ Liegengebliebene Sachen können einfach so verschwinden!! :)}{}
+	{\normalsize Ansprechpartner: FabLab-Aktive, \mail{kontakt@fablab.fau.de} }
+
+\schild{gelb}{Schneideplotter}
+	{\large selbstständige \\ {\riesig Benutzung nur mit} \\  {\large unterschriebener Schneideplotter-} \vspace{0.15cm} \\ {\riesig Einweisung}}{Bei Interesse frage einfach einen Betreuer!}
+	{\linkMitQR{schneideplotter} \\
+	\normalsize Ansprechpartner: FabLab-Aktive, \mail{kontakt@fablab.fau.de}}
+	
+\schild{gruen}{Druckluft}
+	{\large Verwende die Druckluftanlage zum Ausblasen oder Schlauch aufpumpen. \\ \riesig Ventile stets vor dem Trennen einer Verbindung schließen!\\ \large beim Ausblasen von Spänen ggf. Schutzbrille tragen und nicht auf Mitmenschen zielen!\\ bitte NICHT in der Elektrowerkstatt ausblasen, Dreck sollte draußen bleiben!}{Bei Problemen frage einen Betreuer!}
+	{\normalsize Ansprechpartner: FabLab-Aktive, \mail{kontakt@fablab.fau.de}}
+
+	% ob dieser wahn wirklich nötig ist, halte ich für stark fraglich. Ich (philipp) stehe nicht hinter so starken Restriktionen!
+
+	\schild{rot}{Standbohrmaschine}
+	{Benutzung nur nach Rücksprache}
+	{Vor \textbf{jeder} Benutzung einen Betreuer fragen! Er weist dich ein, wenn du noch keine Einweisung hast und überprüft dein Werkstück. Dann erteilt er die Freigabe für dieses Werkstück und du kannst loslegen.
+	\vspace{1em}
+
+	\begin{flushleft}
+	\hspace{0.5cm}Checkliste: 
+	\end{flushleft}
+	\begin{itemize}
+	 \item Haare und lose Armbänder gesichert?
+	 \item Werkstück festgespannt?
+	 \item Bohrer richtig eingespannt?
+	 \item im Zweifelsfall: nicht freigeben!
+	\end{itemize}
+	
+	\vspace{0.15pt}
+	\riesig Bitte gut aufpassen!
+
+	}
+	{\web{http://fablab.fau.de/tool/standbohrmaschine} \\
+	\normalsize Ansprechpartner: FabLab-Aktive, \mail{kontakt@fablab.fau.de}}
+
+
+\schild{gruen}{Lasermaterial}{Selbstbedienung.\\Bitte zuerst die Reste aufbrauchen!}
+{Kleinere Reste befinden sich links in den Schubladen. \\
+Angefangene Platten liegen oben auf den Neuen. \\
+\hspace{1pt} \\
+Wenn kein Rest passt, fange eine neue Platte an.\\
+\hspace{1pt} \\
+\textbf{Die Preisliste hängt links neben der Türe.}}
+{\web{http://fablab.fau.de/tool/lasercutter} \\
+	\normalsize Ansprechpartner: FabLab-Aktive, \mail{kontakt@fablab.fau.de}}
+
+\schild{gruen,text width=13cm}{Elektro- und Mechanik\-material}{Selbstbedienung.\\[5mm]Fehlt was? Fast ausverkauft? \\[2mm] Schreib es auf die Nachkaufliste\\ am Whiteboard!}
+{Die Preise stehen auf den Tütchen/Schubladen. Wenn eine Schublade ganz ausverkauft ist, stelle sie bitte auf den Kopf.\\[1em]
+Manche Mechanik-Teile, z.B. Muttern, sind in größerer Menge in der Nachschubkiste vorrätig.\\[1em]
+Teilesuche online: http://fablab-elektrokram.maxgaukler.de/}
+{\web{http://fablab.fau.de/kosten} \\
+	\normalsize Ansprechpartner: FabLab-Aktive, \mail{kontakt@fablab.fau.de}}	
+
+
+\schild{gruen,text width=14cm}{Plotterfolien}{Bitte genau rechtwinklig abschneiden!\\[2mm]Reste sind in der Kiste über dem Plotter.}
+{Verwende zum Abschneiden bitte die Schneidekante am Plotter.\\[1em]
+Preis und Folientyp (Aufkleber/Textil-Flex/Flock) steht in den Folienrollen auf einem Etikett.\\[1em]
+\textbf{Fehlt was?} Fast ausverkauft? \\Schreib es auf die Nachkaufliste am Whiteboard!\\[1em]
+Teilesuche online: http://fablab-elektrokram.maxgaukler.de/}
+{\web{http://fablab.fau.de/kosten} \\
+	\normalsize Ansprechpartner: FabLab-Aktive, \mail{kontakt@fablab.fau.de}}
+
+\schild{rot}{Lagerplatz}{nur für Betreuer oder nach Rücksprache}{Lagerplatz ist extrem knapp! Alle Dinge müssen deshalb in einer \emph{stapelfähigen, mit Name beschrifteten} Kiste gelagert werden.\\[1em]
+Nicht-Betreuer können nach Rücksprache für einen begrenzten Zeitraum Dinge lagern, müssen dies aber vorher mit einem Betreuer absprechen und die Kiste lesbar mit Name, Mail und Enddatum beschriften.\\[1em]
+Teile mit abgelaufenem Enddatum oder fehlender Beschriftung gelten als Spende an das FabLab und können jederzeit verschwinden.}{}
+
+\schild{gelb}{Reflow-Ofen}
+{\large selbstständige \\ 
+{\riesig Benutzung nur mit} \\  
+{\large unterschriebener Reflow-Ofen-} \vspace{0.15cm} \\
+{\riesig Einweisung} \vspace{0.3cm} \\
+\riesig{\textbf{Nicht geeignet für Lebensmittel!}}}
+{Bei Interesse frage einfach einen Betreuer!}
+	{\linkMitQR{reflow-ofen} \\
+	\normalsize Ansprechpartner: Julian, \mail{julian.neureuther@fablab.fau.de}}
+\vspace{1cm}
+\schild{gelb}{Reflow-Ofen-Controller}
+{\large selbstständige \\ 
+{\riesig Benutzung nur mit} \\  
+{\large unterschriebener Reflow-Ofen-} \vspace{0.15cm} \\
+{\riesig Einweisung} \vspace{0.15cm}}
+{Bei Interesse frage einfach einen Betreuer!}
+	{\linkMitQR{reflow-ofen} \\
+	\normalsize Ansprechpartner: Julian, \mail{julian.neureuther@fablab.fau.de}}
+	
+\schild{gelb}{Lötpastendrucker}
+{\large selbstständige \\ 
+{\riesig Benutzung nur mit} \\  
+{\large unterschriebener Reflow-Ofen-} \vspace{0.15cm} \\
+{\riesig Einweisung} \vspace{0.15cm}}
+{Bei Interesse frage einfach einen Betreuer!}
+	{\linkMitQR{reflow-ofen} \\
+	\normalsize Ansprechpartner: Julian, \mail{julian.neureuther@fablab.fau.de}}
+\vspace{0.3cm}
+\schild{gelb}{Zubehör Reflow-Oven}
+{\large selbstständige \\ 
+{\riesig Benutzung nur mit} \\  
+{\large unterschriebener Reflow-Ofen-} \vspace{0.15cm} \\
+{\riesig Einweisung} \vspace{0.05cm}}
+{	\begin{flushleft}
+	\hspace{0.5cm}Inhalt: 
+	\end{flushleft}
+	\begin{itemize}
+	 \item Lötpaste (Abrechnung pro Gramm, vor und nach Benutzung Abwiegen!)
+ 	 \item Platinenstück zum Umrühren der Lötpaste
+	 \item Rakel
+	 \item ESD-Pinzette
+	 \item K-Typ Thermocouple für Reflow-Controller
+	 \item Gitterrostentnahmewerkzeug
+	 \item USB-Kabel
+	\end{itemize}
+	\vspace{0.3cm}
+{Bei Interesse frage einfach einen Betreuer!}}
+{\linkMitQR{reflow-ofen} \\
+\normalsize Ansprechpartner: Julian,
+\mail{julian.neureuther@fablab.fau.de}}
+
+\schild{gruen}{Absaugmobil CLEANTEC CTM 26}
+{\large{Zum Nass- und Trockensaugen geeignet.}}
+
+{\linkMitQR{absaugmobil-cleantec-ctm-26}
+\mail{technik@fablab.fau.de}}
+
+\vspace{0.5cm}
+\newcommand{\erprobungsbetriebEins}{Verwendung nur nach Rücksprache mit Philipp}
+\newcommand{\erprobungsbetriebZwei}{Im Moment gibt es leider noch keine Einweisung zu diesem Gerät. Deshalb darf es nicht verwendet werden. Bitte sprich mit einem Betreuer, wenn du mithelfen willst.\\{\small Nach schriftlicher Freigabe durch Philipp (philipp@fablab.fau.de) darf es zum Zweck der Erstellung der Einweisung verwendet werden. Sobald es eine Einweisung gibt, wird dieses Schild ersetzt und eine Benutzung wird mit unterschriebener Einweisung möglich sein.}}
+
+
+
+\schild{rot}{Multifunktionstisch MFT 3}
+{Benutzung nur nach Rücksprache.}
+{Im Moment gibt es leider noch keine Einweisung zu diesem Gerät. Bitte sprich mit einem Betreuer.}
+{\linkMitQR{multifunktionstisch-mft-3}\\
+\mail{technik@fablab.fau.de}}
+
+\vspace{0.5cm}
+
+\schild{rot}{Oberfräse OF 1010}
+{\erprobungsbetriebEins}
+{\erprobungsbetriebZwei}
+{\linkMitQR{oberfrase-1010}\\
+\mail{technik@fablab.fau.de}}
+
+\vspace{0.5cm}
+
+\schild{rot}{Tauchsäge TS 55 R }
+{\erprobungsbetriebEins}
+{\erprobungsbetriebZwei}
+{\linkMitQR{tauchsage-ts-55-r}\\\mail{technik@fablab.fau.de}}
+
+\vspace{0.5cm}
+
+\schild{rot}{Proxxon Tellerschleifgerät}
+{\erprobungsbetriebEins}
+{\erprobungsbetriebZwei}
+{}
+
+\vspace{0.5cm}
+
+
+\schild{rot}{Proxxon Schleif- und Poliergerät}
+{\erprobungsbetriebEins}
+{\erprobungsbetriebZwei}
+{}
+
+\vspace{0.5cm}
+
+
+\schild{gruen}{Heißluftfön}
+{Benutzung mit Verstand \\
+\vspace{0.5em}
+Unbedingt nach \\Benutzung auf \texttt{Stufe 1} laufend abkühlen lassen.}
+{Wird sehr \textbf{heiß}!\\ Wende dich bei Unklarheiten an einen Betreuer.}
+
+\vspace{0.5cm}
+
+\schild{rot}{Ultraschallbad}
+{Darf noch nicht verwendet werden.}
+{Im Moment gibt es leider noch keine Einweisung zu diesem Gerät. Bitte sprich mit einem Betreuer.}
+
+\end{document}
