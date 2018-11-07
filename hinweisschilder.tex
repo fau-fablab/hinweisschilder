@@ -11,8 +11,7 @@
 \fancyhf{}  % Alle Header/Footer entfernen
 
 \fancyfoot[c]{https://github.com/fau-fablab/hinweisschilder}
-\usetikzlibrary{shapes,arrows} % für das flowchart
-
+\usetikzlibrary{shapes,arrows,positioning}
 \tikzstyle{rot} = [fill=red!80]
 
 
@@ -48,6 +47,7 @@
 			\node [hinweisschild,#1] (box) { 
 				\riesig \textbf{#2} \\ \vspace{0.4cm}  #3\\  \vspace{0.4cm} \large #4
 			};
+			\node[right=0em of box] {\rotatebox{90}{\tiny \ttfamily https://github.com/fau-fablab/hinweisschilder}};
 		\end{tikzpicture} \\
 		\begin{tikzpicture}[baseline={(box.base)}]
 			\node [info] (box) { 
@@ -59,8 +59,8 @@
 
 
 % HINWEIS: die QR-Codes müssen erst generiert werden. Dazu `make` ausführen.
-% Zum Ergänzen neuer Werkzeuge den Tool-Namen (http://fablab.fau.de/tool/TOOLNAME) in generate-qr.py bei "maschinen" eintragen und 'make' ausführen
-\newcommand{\linkMitQR}[1]{\includegraphics[width=3cm]{./#1.png} \\ \web{http://fablab.fau.de/tool/#1}}
+% Zum Ergänzen neuer Werkzeuge den Tool-Namen (https://fablab.fau.de/tool/TOOLNAME) in generate-qr.py bei "maschinen" eintragen und 'make' ausführen
+\newcommand{\linkMitQR}[1]{\includegraphics[width=3cm]{./#1.png} \\ \web{https://fablab.fau.de/tool/#1}}
 
 \begin{document}
 \hyphenation{Sil-ben-tren-nung hier ein-tra-gen   immer nur erweitern   Um-lau-te ge-hen zur Zeit nicht     Betreuer   Roland   iModela    } 
@@ -97,10 +97,24 @@
 	\normalsize Ansprechpartner: Max, \mail{technik@fablab.fau.de}}
 
 
-\schild{gelb}{Lasercutter}
-	{\large selbstständige \\ {\riesig Benutzung nur mit} \\  {\large unterschriebener Laser-} \vspace{0.15cm} \\ {\riesig Einweisung}}{Bei Interesse frage einfach einen Betreuer!}
+\schild{gelb}{Lasercutter LTT iLaser}
+	{Benutzung nur mit Einweisung\\ \smallskip \small (Unterschrift auf Einweisungsliste speziell für dieses Gerät)}{Bei Interesse frage einfach einen Betreuer!
+	
+	\bigskip
+Einweisungen vor Oktober 2018 oder für den kleineren Lasercutter (Epilog Zing) sind \textbf{hier nicht gültig}.}
 	{ \linkMitQR{lasercutter} \\
-	\normalsize Ansprechpartner: AG Laser+Plotter, \mail{laser+plotter@fablab.fau.de} }
+	\normalsize Ansprechpartner: AG Technik, \mail{kontakt@fablab.fau.de} }
+
+
+
+\schild{gelb}{Lasercutter Epilog Zing}
+{Benutzung nur mit Einweisung\\ \smallskip \small (Unterschrift auf Einweisungsliste speziell für dieses Gerät)}{Bei Interesse frage einfach einen Betreuer!
+	
+	\bigskip
+	Einweisungen für den großen Lasercutter (LTT iLaser) sind \textbf{hier nicht gültig}.}
+{ \linkMitQR{lasercutter} \\
+	\normalsize Ansprechpartner: AG Technik, \mail{kontakt@fablab.fau.de} }
+
 
 	%nicht mehr in Betrieb
 % \schild{gelb}{3D-Drucker Prusa Mendel}

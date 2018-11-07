@@ -32,7 +32,7 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 codes = []
 maschinen = ["lasercutter","3d-drucker","schneideplotter","cnc-fraese","cnc-drehbank", "platinenfertigung","3d-drucker-makerbot","cnc-fraese-roland","farblaserdrucker-canon-clc3200","3d-drucker-ultimaker","reflow-ofen","absaugmobil-cleantec-ctm-26","oberfrase-1010","multifunktionstisch-mft-3","tauchsage-ts-55-r"]
 for m in maschinen:
-	codes = codes + [["http://fablab.fau.de/tool/" + m, m]]
+	codes = codes + [["https://fablab.fau.de/tool/" + m, m]]
 # TODO something like cd (dirname $0) - change to the directory that the script lives inside
 for [text, dest] in codes:
 	makeQR(text, dest+".png")
