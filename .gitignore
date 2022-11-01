@@ -1,5 +1,6 @@
 *.pyc
 *.png
+*.svg
 output
 revision.tex
 *.pdf
