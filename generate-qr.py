@@ -37,7 +37,7 @@ maschines = {
 }
 
 def makeQR(toolName, url):
-	print("generating qr code for " + toolName+"...")
+	#print("generating qr code for " + toolName+"...")
 	qr = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_H)
 	qr.add_data(url)
 	img = qr.make_image(image_factory=StyledPilImage, embeded_image_path="./fab_cube.png")
