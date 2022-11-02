@@ -2,13 +2,15 @@
 # -*- coding: utf-8 -*-
 # (Copyleft) Harald
 
-import os, pyqrcode, qrcode
+import os, qrcode
 from qrcode.image.styledpil import StyledPilImage
 
 fablabMainURL = "https://fablab.fau.de/"
-
-# Only place wordpress-permalinks in this list. Otherwise, links will break since machines are in (sub-)groups now.
-
+'''
+	!!! 
+	Only place wordpress-permalinks in this list. Otherwise, links will break since machines are on sub-pages now.
+	!!!
+'''
 maschines = {
 	"fablab",
 	"lasercutter",
