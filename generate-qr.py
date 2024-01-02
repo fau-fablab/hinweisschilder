@@ -34,7 +34,7 @@ maschines = {
 	"oesen-und-druckknopfpresse",
 	"stickmaschine",
 	"standbohrmaschine",
-	"dampfphasenloetanlage"
+	"vp"
 }
 
 def makeQR(toolName, url):
