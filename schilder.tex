@@ -1,0 +1,426 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% COPYRIGHT: (C) 2012-2026 FAU FabLab and others
+% CC-BY-SA 3.0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Die Hinweisschilder, eingebunden von hinweisschilder-a6.tex und
+% hinweisschilder-a7.tex. Aufbau und Optionen: siehe schilder-layout.tex.
+%
+% \begin{schild}[farbe=..., modell=..., einweisung=REPO, kontakt=...]{Titel}{Status}
+%   Text
+% \end{schild}
+%
+% Farben (Hintergrund):
+%   gruen      Benutzung mit allgemeiner Werkstatt-Einweisung
+%   gelbgruen  wie gruen, aber empfindlich: Hinweise beachten
+%   gelb       nur mit Einweisung für dieses Gerät
+%   gelbrot    nur mit Einweisung, Aufsicht erforderlich
+%   rot        nur nach Rücksprache bzw. gar nicht
+%
+% Gelbe Schilder mit leerem Status bekommen einheitlich "Benutzung nur mit
+% unterschriebener Einweisung".
+%
+% QR-Code: einweisung=REPO zeigt auf das neueste Release der Einweisung
+% (github.com/fau-fablab/REPO), sonst seite=... für fablab.fau.de.
+%
+% Im PDF werden die Schilder sortiert: erst Geräte mit eigener Einweisung,
+% dann allgemeine Werkstatt-Einweisung, dann ohne Einweisung (je ab neuem Bogen).
+
+\hyphenation{Be-treu-er Be-treu-er-in-nen Werk-statt-Ein-wei-sung Multi-funk-tions-tisch}
+
+\newcommand{\werkstattEinweisung}{Benutzung mit allgemeiner Werkstatt-Einweisung}
+
+% ---------------------------------------------------------------------
+% Zerspanung
+% ---------------------------------------------------------------------
+\begin{schild}[farbe=gelbrot, einweisung=fraese-einweisung,
+	kontakt={AG Zerspanung, \mail{zerspanung@fablab.fau.de}}]
+	{CNC-Fräse}{Benutzung nur mit Einweisung, Aufsicht erforderlich!}
+Bei Interesse frage die Betreuer:innen!
+
+Je nach Einweisungsstufe sind bestimmte Tätigkeiten nur unter Aufsicht erlaubt.
+\end{schild}
+
+\begin{schild}[farbe=gelbrot, einweisung=drehbank-einweisung,
+	kontakt={AG Zerspanung, \mail{zerspanung@fablab.fau.de}}]
+	{CNC-Drehbank}{Benutzung nur mit Einweisung, Aufsicht erforderlich!}
+Bei Interesse frage die Betreuer:innen!
+
+Je nach Einweisungsstufe sind bestimmte Tätigkeiten nur unter Aufsicht erlaubt.
+\end{schild}
+
+% ---------------------------------------------------------------------
+% Lasercutter, 3D-Drucker, Schneideplotter
+% ---------------------------------------------------------------------
+\begin{schild}[farbe=gelb, modell=LTT iLaser, einweisung=lasercutter-einweisung,
+	kontakt={AG Technik, \mail{kontakt@fablab.fau.de}}]
+	{Lasercutter}{}
+Die Einweisung gilt nur für dieses Gerät (eigene Einweisungsliste).
+Bei Interesse frage einfach die Betreuer:innen!
+
+Einweisungen vor Oktober 2018 oder für den kleineren Lasercutter (Epilog Zing)
+sind \textbf{hier nicht gültig}.
+\end{schild}
+
+\begin{schild}[farbe=gelb, modell=Epilog Zing, einweisung=lasercutter-einweisung,
+	kontakt={AG Technik, \mail{kontakt@fablab.fau.de}}]
+	{Lasercutter}{}
+Die Einweisung gilt nur für dieses Gerät (eigene Einweisungsliste).
+Bei Interesse frage einfach die Betreuer:innen!
+
+Einweisungen für den großen Lasercutter (LTT iLaser) sind \textbf{hier nicht gültig}.
+\end{schild}
+
+\begin{schild}[farbe=gruen, seite=lasercutter]
+	{Lasermaterial}{Selbstbedienung. Bitte zuerst die Reste aufbrauchen!}
+Kleinere Reste befinden sich links in den Schubladen.
+Angefangene Platten liegen oben auf den neuen.
+Wenn kein Rest passt, fange eine neue Platte an.
+
+\textbf{Die Preisliste hängt links neben der Tür.}
+\end{schild}
+
+\begin{schild}[farbe=gelb, modell=Bambu Lab, einweisung=3d-drucker-einweisung]
+	{FDM-3D-Drucker}{}
+Bei Interesse frage die Betreuer:innen!
+\end{schild}
+
+\begin{schild}[farbe=gelb, einweisung=sla-drucker-einweisung, symbole={M004, M009}]
+	{SLA-Drucker}{}
+Bei Interesse frage einfach die Betreuer:innen!
+\end{schild}
+
+\begin{schild}[farbe=gelb, modell=Formlabs Form Wash und Form Cure, einweisung=sla-drucker-einweisung,
+	symbole={GHS05, GHS07, GHS08, GHS09, M004, M009}]
+	{Waschen und Aushärten}{}
+Es gilt die SLA-Einweisung.
+
+Bei Interesse frage einfach die Betreuer:innen!
+\end{schild}
+
+\begin{schild}[farbe=gelb, einweisung=schneideplotter-einweisung]
+	{Schneideplotter}{}
+Bei Interesse frage einfach die Betreuer:innen!
+\end{schild}
+
+\begin{schild}[farbe=gelb, einweisung=schneideplotter-einweisung, symbole={W017}]
+	{T-Shirt-Presse}{}
+Es gilt die Schneideplotter-Einweisung.
+
+Bei Interesse frage einfach die Betreuer:innen!
+\end{schild}
+
+\begin{schild}[farbe=gruen]
+	{Plotterfolien}{Bitte genau rechtwinklig abschneiden!}
+Reste sind in der Kiste über dem Plotter.
+Verwende zum Abschneiden bitte die Schneidekante am Plotter.
+
+Preis und Folientyp (Aufkleber/Textil-Flex/Flock) stehen in den Folienrollen auf einem Etikett.
+
+\textbf{Fehlt was?} Fast ausverkauft? Schreib es auf die Nachkaufliste am Whiteboard!
+Teilesuche online: \web{app.fablab.fau.de}
+\end{schild}
+
+% ---------------------------------------------------------------------
+% Elektronik
+% ---------------------------------------------------------------------
+\begin{schild}[farbe=gruen, einweisung=werkstatt-einweisung]
+	{Elektro-Arbeitsplätze}{Benutzung der Geräte mit allgemeiner Werkstatt-Einweisung}
+Bei Interesse frage einfach die Betreuer:innen!
+
+Arbeitsplatz \textbf{sauber und leer} verlassen: Werkzeug verräumen, Müll entsorgen,
+Kabel zurücklegen. Liegengebliebene Sachen können einfach so verschwinden!
+\end{schild}
+
+\begin{schild}[farbe=rot, kontakt={Max B, Philipp, \mail{kontakt@fablab.fau.de}}]
+	{Entlötstation}{Bitte frage die Betreuer:innen!}
+Vorsicht, empfindlich: Nicht klopfen, nicht hebeln!
+
+Spitzenwechsel, Reinigung, Entleeren usw. nur durch Gerätebetreuer:innen!
+Bitte lasse dir die Benutzung von den Betreuer:innen erläutern.
+
+Bei Problemen bitte an Max B, Philipp oder Patrick wenden.
+\end{schild}
+
+\begin{schild}[farbe=gelb, einweisung=platinenaetzer-einweisung,
+	kontakt={Max, \mail{technik@fablab.fau.de}}, symbole={W023, M004, M009}]
+	{Platinenfertigung}{}
+Bei Interesse frage einfach die Betreuer:innen!
+\end{schild}
+
+\begin{schild}[farbe=gelb, einweisung=platinenaetzer-einweisung,
+	kontakt={Max, \mail{technik@fablab.fau.de}}]
+	{DuKo-Presse für Platinen}{}
+Vorsichtig verwenden! Das Werkzeug ist sehr empfindlich!
+
+Bei Interesse frage einfach die Betreuer:innen!
+\end{schild}
+
+\begin{schild}[farbe=rot, kontakt={Philipp, \mail{kontakt@fablab.fau.de}}]
+	{Sprühätzer}{Darf nicht benutzt werden}
+Es wurde noch keine Einweisung erstellt und freigegeben.
+Bei Interesse wende dich bitte an Philipp!
+
+\textbf{Bei Zuwiderhandlung erfolgt Lab-Verbot!}
+\end{schild}
+
+\begin{schild}[farbe=gelb, einweisung=reflow-ofen-einweisung,
+	kontakt={Julian, \mail{julian.neureuther@fablab.fau.de}}]
+	{Lötpastendrucker}{}
+Es gilt die Reflow-Ofen-Einweisung.
+
+Bei Interesse frage einfach die Betreuer:innen!
+\end{schild}
+
+\begin{schild}[farbe=gelb, modell=VaporPhase 1, einweisung=dampfphasenloetanlage-einweisung,
+	symbole={W017, M004, P022}]
+	{Dampfphasen\-lötanlage}{}
+Bei Interesse frage die Betreuer:innen!
+\end{schild}
+
+\begin{schild}[farbe=rot, modell=Siglent SSA3021X, kontakt={Markus F+W, \mail{kontakt@fablab.fau.de}}]
+	{Spektrumanalysator}{Benutzung nur nach Rücksprache}
+\textbf{Achtung: ESD-gefährdet!}
+
+Im Moment gibt es leider noch keine Einweisung zu diesem Gerät.
+Bitte sprich mit den Betreuer:innen.
+\end{schild}
+
+\begin{schild}[farbe=gruen, einweisung=werkstatt-einweisung]
+	{Tastköpfe}{\werkstattEinweisung}
+Bei Unklarheiten frage die Betreuer:innen!
+
+Kabel nicht knicken, nicht am Kabel ziehen.
+Nach Benutzung vollständig zurücklegen.
+\end{schild}
+
+\begin{schild}[farbe=gelbgruen, modell={Testec, 250\,MHz / 20\,MHz, 1:10 / 1:1}, einweisung=werkstatt-einweisung]
+	{Tastköpfe}{\werkstattEinweisung, bitte sorgfältig behandeln}
+6 Stück mit Masseklemme und Hakenspitze, dazu Zubehör: Krokoklemme auf BNC,
+BNC-BNC-Kabel, T-Stücke.
+
+Teilerverhältnis (1:1 oder 1:10) auch am Oszilloskop einstellen, bei 1:10 den
+Tastkopf vorher abgleichen. Nach Benutzung vollständig zurücklegen.
+\end{schild}
+
+\begin{schild}[farbe=gelbgruen, modell=bis 350\,MHz, einweisung=werkstatt-einweisung]
+	{Hochwertige Tastköpfe}{\werkstattEinweisung, bitte Hinweise beachten}
+Nur verwenden, wenn die Messung sie wirklich braucht, sonst die einfachen Tastköpfe nehmen.
+\begin{itemize}
+	\item Spitzen sind empfindlich: nicht verbiegen, nicht als Werkzeug benutzen
+	\item Kabel nicht knicken, nicht am Kabel ziehen
+	\item maximale Eingangsspannung beachten
+	\item Masseklemme nur an Masse anschließen
+	\item vor der Messung am Oszilloskop abgleichen
+\end{itemize}
+\end{schild}
+
+% ---------------------------------------------------------------------
+% Werkstatt
+% ---------------------------------------------------------------------
+\begin{schild}[farbe=gruen, einweisung=werkstatt-einweisung]
+	{Werkbank}{Benutzung der Werkzeuge mit allgemeiner Werkstatt-Einweisung}
+Bei Interesse frage einfach die Betreuer:innen!
+Beachte auch die Aufschrift an der Standbohrmaschine!
+
+Arbeitsplatz \textbf{sauber und leer} verlassen: Werkzeug verräumen, Müll entsorgen.
+Liegengebliebene Sachen können einfach so verschwinden!
+\end{schild}
+
+\begin{schild}[farbe=rot, einweisung=werkstatt-einweisung]
+	{Standbohrmaschine}{Benutzung nur nach Rücksprache}
+Vor \textbf{jeder} Benutzung die Betreuer:innen fragen! Sie weisen dich ein, wenn du
+noch keine Einweisung hast, prüfen dein Werkstück und geben es frei.
+\begin{itemize}
+	\item Haare und alles andere Lose gesichert?
+	\item Werkstück festgespannt (nicht mit der Hand halten!)?
+	\item Bohrer richtig eingespannt?
+	\item Im Zweifelsfall: nicht freigeben!
+\end{itemize}
+\textbf{Bitte gut aufpassen!}
+\end{schild}
+
+\begin{schild}[farbe=gruen]
+	{Druckluft}{Ventile stets vor dem Trennen einer Verbindung schließen!}
+Verwende die Druckluftanlage zum Ausblasen oder Schlauch aufpumpen.
+
+Beim Ausblasen von Spänen ggf. Schutzbrille tragen und nicht auf Mitmenschen zielen!
+Bitte \textbf{nicht} in der Elektrowerkstatt ausblasen, Dreck sollte draußen bleiben!
+
+Bei Problemen frage die Betreuer:innen!
+\end{schild}
+
+\begin{schild}[farbe=gruen, modell=Festool CLEANTEC CTM 26]
+	{Absaugmobil}{Bitte gerne viel benutzen!}
+Zum Nass- und Trockensaugen geeignet.
+\end{schild}
+
+\begin{schild}[farbe=rot, modell=Festool MFT 3, seite=multifunktionstisch,
+	kontakt={FabLab-Aktive, \mail{technik@fablab.fau.de}}]
+	{Multifunktionstisch}{Benutzung nur nach Rücksprache}
+Im Moment gibt es leider noch keine Einweisung zu diesem Gerät.
+Bitte sprich mit den Betreuer:innen.
+\end{schild}
+
+\begin{schild}[farbe=gelb, modell=Festool OF 1010, einweisung=festool-oberfraese-einweisung]
+	{Oberfräse}{}
+Bei Interesse frage die Betreuer:innen!
+\end{schild}
+
+\begin{schild}[farbe=gelb, einweisung=shaper-origin-einweisung]
+	{Shaper Origin}{}
+Bei Interesse frage die Betreuer:innen!
+\end{schild}
+
+\newcommand{\erprobungsbetriebEins}{Verwendung nur durch stark eingeschränkten Nutzerkreis}
+\newcommand{\erprobungsbetriebZwei}{Diese Maschine darf nur nach Unterschrift auf der
+zugehörigen Liste verwendet werden. Einweisung unfertig, daher dürfen weitere Personen
+nur nach ausführlichem Beschäftigen mit der Maschine und ihrer Anleitung und durch
+Unterschrift von Philipp (\mail{philipp@fablab.fau.de}) auf die Liste hinzugefügt
+werden. Sobald es eine Einweisung gibt, wird dieses Schild ersetzt und eine normale
+Benutzung wird mit unterschriebener Einweisung möglich sein. Bei der Benutzung sind die
+Sicherheitsregeln aus der Anleitung zu befolgen.}
+
+\begin{schild}[farbe=rot, modell=Festool TS 55 R, einweisung=festool-kreissaege-einweisung,
+	kontakt={Philipp, \mail{technik@fablab.fau.de}}]
+	{Tauchsäge}{\erprobungsbetriebEins}
+\erprobungsbetriebZwei
+\end{schild}
+
+\begin{schild}[farbe=rot, modell=Proxxon, kontakt={Philipp, \mail{kontakt@fablab.fau.de}}]
+	{Tellerschleifgerät}{\erprobungsbetriebEins}
+\erprobungsbetriebZwei
+\end{schild}
+
+\begin{schild}[farbe=rot, modell=Proxxon, kontakt={Philipp, \mail{kontakt@fablab.fau.de}}]
+	{Schleif- und Poliergerät}{\erprobungsbetriebEins}
+\erprobungsbetriebZwei
+\end{schild}
+
+\begin{schild}[farbe=rot, modell=Proxxon, einweisung=tischkreissaege-einweisung,
+	kontakt={David, \mail{kontakt@fablab.fau.de}}]
+	{Tischkreissäge}{Benutzung nur mit unterschriebener Einweisung, immer unter Aufsicht durch Betreuer:innen!}
+Bei Interesse frage die Betreuer:innen!
+\end{schild}
+
+\begin{schild}[farbe=rot, modell=Festool, kontakt={David, \mail{kontakt@fablab.fau.de}}]
+	{Tischkreissäge}{Benutzung nur mit unterschriebener Einweisung, immer unter Aufsicht durch Betreuer:innen!}
+Bei Interesse frage die Betreuer:innen!
+\end{schild}
+
+% Festool-Handmaschinen und Zubehör (Issue #1)
+% \festool[Symbole]{Gerät}{Modell}{Hinweise}
+\newcommand{\festool}[4][]{%
+\begin{schild}[farbe=gruen, modell={#3}, einweisung=werkstatt-einweisung, symbole={#1}]
+	{#2}{\werkstattEinweisung}
+Bei Unklarheiten frage die Betreuer:innen!
+
+#4
+
+Nach Benutzung vollständig in den Systainer zurücklegen.
+\end{schild}}
+
+\festool{Akkuschrauber}{Festool T 18+3}
+	{Akkus nach Benutzung wieder aufladen.}
+
+\festool[M004]{Stichsäge}{Festool CARVEX PS 420}
+	{Werkstück fest einspannen.
+	Passendes Sägeblatt für das Material verwenden.}
+
+\festool{Zubehör Stichsäge}{Festool CARVEX PS 420}
+	{Sägeblätter und Zubehör für die CARVEX.
+	Stumpfe oder abgebrochene Sägeblätter bitte den Betreuer:innen melden.}
+
+\festool{Schwingschleifer}{Festool RUTSCHER RS 300}
+	{Nur mit angeschlossener Absaugung schleifen.}
+
+\festool{Exzenterschleifer}{Festool ROTEX RO 150}
+	{Nur mit angeschlossener Absaugung schleifen.}
+
+\festool[M004]{Oszillierer}{Festool VECTURO OS 400}
+	{Werkstück fest einspannen.}
+
+\festool{Anschlagschienen\-zubehör}{Festool}
+	{Zubehör für die Führungs- und Anschlagschienen.}
+
+\begin{schild}[farbe=gruen, modell=für ROTEX und RUTSCHER, einweisung=werkstatt-einweisung]
+	{Schleifpapier}{Rund, viereckig und dreieckig}
+Verbrauchtes Schleifpapier bitte entsorgen.
+
+\textbf{Fehlt was?} Fast ausverkauft? Schreib es auf die Nachkaufliste am Whiteboard!
+\end{schild}
+
+\begin{schild}[farbe=gruen, modell=Dremel 3000, seite=dremel]
+	{Multifunktionswerkzeug}{Nur für feine Arbeiten}
+Für Gröberes haben wir den Fein-Bohrschleifer.
+
+Wende dich bei Unklarheiten bitte an die Betreuer:innen!
+\end{schild}
+
+\begin{schild}[farbe=gruen, symbole={W017}]
+	{Heißluftfön}{Benutzung mit Verstand}
+Unbedingt nach Benutzung auf \texttt{Stufe 1} laufend abkühlen lassen.
+
+Wende dich bei Unklarheiten an die Betreuer:innen.
+\end{schild}
+
+\begin{schild}[farbe=gelb, einweisung=ultraschallbad-einweisung,
+	kontakt={FabLab-Aktive, \mail{technik@fablab.fau.de}}]
+	{Ultraschallbad}{}
+Bitte wende dich an die Betreuer:innen.
+\end{schild}
+
+% ---------------------------------------------------------------------
+% Textil
+% ---------------------------------------------------------------------
+\begin{schild}[farbe=gelb, modell=Brother VR, einweisung=stickmaschine-einweisung]
+	{Stickmaschine}{}
+Bei Interesse frage die Betreuer:innen!
+\end{schild}
+
+\begin{schild}[farbe=gelb, modell=Pfaff 260, einweisung=naehmaschine-einweisung]
+	{Nähmaschine}{}
+Bei Interesse frage die Betreuer:innen!
+\end{schild}
+
+\begin{schild}[farbe=gruen, seite=oesen-und-druckknopfpresse]
+	{Druckknopf- und Ösenpresse}{Bitte nicht mit Gewalt auf den Hebel drücken}
+Niemals einen Hammer oder Ähnliches verwenden!
+
+Wende dich bei Unklarheiten bitte an die Betreuer:innen!
+\end{schild}
+
+% ---------------------------------------------------------------------
+% Material, Lager, Sonstiges
+% ---------------------------------------------------------------------
+\begin{schild}[farbe=gruen, seite=kosten]
+	{Elektro- und Mechanikmaterial}{Selbstbedienung}
+Fehlt was? Fast ausverkauft? Schreib es auf die Nachkaufliste am Whiteboard!
+
+Die Preise stehen auf den Tütchen/Schubladen. Wenn eine Schublade ganz ausverkauft ist,
+stelle sie bitte auf den Kopf.
+
+Manche Mechanik-Teile, z.\,B. Muttern, sind in größerer Menge in der Nachschubkiste vorrätig.
+\end{schild}
+
+\begin{schild}[farbe=gruen, modell=FabLab-Kamera]
+	{Kamera}{\werkstattEinweisung}
+Gerne für Fotos von Projekten verwenden!
+
+Fotos nach dem Übertragen von der Speicherkarte löschen.
+Akku nach Benutzung aufladen und die Kamera vollständig zurücklegen.
+\end{schild}
+
+\begin{schild}[farbe=gruen]
+	{Fundsachenkiste}{Alles mit \enquote{FFA} Beschriftete ist zu verschenken. Der Rest sind Fundsachen.}
+Hier landet der auf Tischen liegengelassene Schrott. Die Kiste wird nach jedem
+FabLab-Treffen stark aussortiert und der Großteil weggeschmissen.
+\end{schild}
+
+% Generisches Schild
+\begin{schild}[farbe=rot, modell={Gerät: \rule{6cm}{0.4pt}}, startseite]
+	{Außer Betrieb}{Darf nicht benutzt werden}
+Es wurde noch keine Einweisung erstellt und freigegeben.
+
+\textbf{Bei Zuwiderhandlung erfolgt Lab-Verbot!}
+\end{schild}
