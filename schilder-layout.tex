@@ -29,7 +29,7 @@
 % dazwischen Schnittlinien für die Schere. Beim Drucken "Tatsächliche Größe"
 % (100 %) wählen, nicht "An Seite anpassen".
 
-\usepackage{qrcode}
+\usepackage[nolinks]{qrcode} % keine Link-Rahmen um die QR-Codes
 \usepackage{ifthen}
 \usepackage{pifont}   % \ding{34}: Schere
 \usepackage{ragged2e} % Flattersatz mit Silbentrennung
@@ -50,16 +50,18 @@
 % Bogen und Karte
 % ---------------------------------------------------------------------
 \ifthenelse{\equal{\Schildformat}{A7}}{%
-	\geometry{a4paper, portrait, margin=0pt}
+	\geometry{a4paper, portrait, margin=0pt, hoffset=0pt, voffset=0pt}
 	\newcommand{\Spalten}{2}\newcommand{\Zeilen}{4}   % Felder 105 x 74,25 mm
 	\newcommand{\Kartenfaktor}{0.7071}
 }{%
-	\geometry{a4paper, landscape, margin=0pt}
+	\geometry{a4paper, landscape, margin=0pt, hoffset=0pt, voffset=0pt}
 	\newcommand{\Spalten}{2}\newcommand{\Zeilen}{2}   % Felder 148,5 x 105 mm
 	\newcommand{\Kartenfaktor}{1}
 }
 \pagestyle{empty}
 \fancyhf{}
+% fablab-document.cls verschiebt die Seite mit \hoffset/\voffset; eso-pic
+% (Schnittlinien und Karten) rechnet das nicht heraus, deshalb oben auf 0 gesetzt.
 
 \title{Hinweisschilder \Schildformat}
 
@@ -68,10 +70,10 @@
 \setlength{\FeldBreite}{\dimexpr\paperwidth/\Spalten\relax}
 \setlength{\FeldHoehe}{\dimexpr\paperheight/\Zeilen\relax}
 
-% Maße der Karte in mm, für A6 (Feld 148,5 x 105 mm, 5 mm Abstand zur
-% Schnittlinie, der zugleich als Druckrand reicht)
-\newcommand{\kB}{138.5}  % Kartenbreite
-\newcommand{\kH}{95}     % Kartenhöhe
+% Maße der Karte in mm, für A6 (Feld 148,5 x 105 mm, 6,5 mm Abstand zur
+% Schnittlinie; bei A7 bleiben so 4,6 mm, genug Rand für übliche Drucker)
+\newcommand{\kB}{135.5}  % Kartenbreite
+\newcommand{\kH}{92}     % Kartenhöhe
 \newcommand{\kRand}{5}   % Innenabstand
 \newcommand{\qrGroesse}{28}
 \newcommand{\qrKasten}{36}  % Breite des weißen QR-Kastens
@@ -187,7 +189,7 @@
 	\passend{15}{6}{\textB mm}{\mitteH mm}{#3}\sbox{\textBox}{\usebox{\passendBox}}%
 	% Fuß
 	\sbox{\kontaktBox}{\fontsize{8}{9.6}\selectfont Ansprechpartner: \schildKontakt}%
-	\pgfmathsetmacro{\kontaktB}{\kB-2*\kRand-45}%
+	\pgfmathsetmacro{\kontaktB}{\kB-2*\kRand-58}% Platz für die Version rechts
 	\ifdim\wd\kontaktBox>\kontaktB mm
 		\sbox{\kontaktBox}{\resizebox{\kontaktB mm}{!}{\usebox{\kontaktBox}}}%
 	\fi
