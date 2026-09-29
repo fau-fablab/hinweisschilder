@@ -3,6 +3,7 @@
 *.svg
 output
 revision.tex
+version.tex
 *.pdf
 
 ## Core latex/pdflatex auxiliary files:

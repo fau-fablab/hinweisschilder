@@ -12,6 +12,8 @@
 
 \fancyfoot[c]{https://github.com/fau-fablab/hinweisschilder}
 \usetikzlibrary{shapes,arrows,positioning}
+\usepackage{qrcode}
+\usepackage{ifthen}
 \tikzstyle{rot} = [fill=red!80]
 
 
@@ -58,9 +60,20 @@
 }
 
 
-% HINWEIS: die QR-Codes müssen erst generiert werden. Dazu `make` ausführen.
-% Zum Ergänzen neuer Werkzeuge den Tool-Namen (https://fablab.fau.de/TOOLNAME-PERMALINK) in generate-qr.py bei "maschinen" eintragen und 'make' ausführen
-\newcommand{\linkMitQR}[1]{\includegraphics[width=3cm]{./#1.png} \\ \web{https://fablab.fau.de/#1}}
+% QR-Code mit FabCube in der Mitte, erzeugt von LaTeX (Paket qrcode).
+% Fehlerkorrektur H, damit der Code trotz Logo lesbar bleibt.
+\newsavebox{\qrbox}
+\newcommand{\qrMitCube}[1]{%
+	\sbox{\qrbox}{\qrcode[height=3cm,level=H]{#1}}%
+	\usebox{\qrbox}%
+	\llap{\makebox[\wd\qrbox]{\raisebox{\dimexpr(\ht\qrbox-\dp\qrbox-\height+\depth)/2\relax}{%
+		\colorbox{white}{\includegraphics[width=0.65cm]{fab_cube.png}}}}}}
+% Link auf die Werkzeugseite: \linkMitQR{TOOLNAME} für https://fablab.fau.de/TOOLNAME
+% (nur WordPress-Permalinks verwenden), \linkMitQR{fablab} für die Startseite.
+\newcommand{\linkMitQR}[1]{%
+	\ifthenelse{\equal{#1}{fablab}}%
+		{\qrMitCube{https://fablab.fau.de/} \\ \web{https://fablab.fau.de}}%
+		{\qrMitCube{https://fablab.fau.de/#1} \\ \web{https://fablab.fau.de/#1}}}
 
 \begin{document}
 \hyphenation{Sil-ben-tren-nung hier ein-tra-gen   immer nur erweitern   Um-lau-te ge-hen zur Zeit nicht     Betreuer   Roland   iModela   Multi-funk-tions-tisch } 
