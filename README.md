@@ -6,14 +6,31 @@ Hinweisschilder an den Maschinen des [FAU FabLab](https://fablab.fau.de).
 Inhalt
 ------
 
-- Schilder mit Ampelfarbe (rot/gelb/grün), Hinweisen zur Benutzung und QR-Code zur Einweisung
+- Schilder mit Ampelfarbe als Hintergrund: grün (allgemeine Werkstatt-Einweisung),
+  gelb (nur mit unterschriebener Einweisung für das Gerät), rot (nur nach Rücksprache),
+  dazu Verläufe gelb-grün und gelb-rot
+- Hinweise zur Benutzung, Sicherheitszeichen (GHS, ISO 7010) und ein QR-Code, der auf das
+  neueste Release der passenden Einweisung zeigt (sonst auf fablab.fau.de)
+- im PDF sortiert: erst Geräte mit eigener Einweisung, dann allgemeine Werkstatt-Einweisung,
+  dann ohne Einweisung
+
+Die Schilder gibt es in zwei Größen, jeweils als DIN-A4-Bögen zum Ausschneiden
+(Schnittlinien mit Schere):
+
+- `hinweisschilder-a6.pdf`: DIN A6, 4 Schilder pro Bogen (A4 quer)
+- `hinweisschilder-a7.pdf`: DIN A7, 8 Schilder pro Bogen (A4 hoch)
+
+Beim Drucken **tatsächliche Größe (100 %)** wählen, nicht „An Seite anpassen“.
+
+Die Schilder stehen in `schilder.tex`, Aufbau und Farben in `schilder-layout.tex`.
 
 Download
 --------
 
 Die neueste Version aus [GitHub](https://github.com/fau-fablab/hinweisschilder) ist als PDF abrufbar:
 
-- [Hinweisschilder](https://brain.fablab.fau.de/build/hinweisschilder/hinweisschilder.pdf)
+- [Hinweisschilder DIN A6](https://brain.fablab.fau.de/build/hinweisschilder/hinweisschilder-a6.pdf)
+- [Hinweisschilder DIN A7](https://brain.fablab.fau.de/build/hinweisschilder/hinweisschilder-a7.pdf)
 
 Außerdem baut eine GitHub Action die PDFs bei jedem Push. Auf dem Hauptbranch entsteht dabei ein
 [Release](https://github.com/fau-fablab/hinweisschilder/releases) mit Datums-Version (`vJJJJ.MM.TT`) und den PDFs.

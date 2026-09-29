@@ -1,0 +1,285 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% COPYRIGHT: (C) 2012-2026 FAU FabLab and others
+% CC-BY-SA 3.0
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Gemeinsame Präambel der Hinweisschilder. Wird von hinweisschilder-a6.tex
+% und hinweisschilder-a7.tex nach \documentclass eingebunden, vorher muss
+% \Schildformat (A6 oder A7) definiert sein. Die Schilder selbst stehen in
+% schilder.tex.
+%
+% Jedes Schild ist eine Karte im Querformat mit festem Aufbau:
+%
+%   +--------------------------------------------+
+%   | Titel                                      |  Hintergrund in Ampel-
+%   | Modell                                     |  farbe bzw. Verlauf
+%   | Status                                     |
+%   |--------------------------------------------|
+%   | Text                            +--------+ |
+%   |                                 |   QR   | |  QR-Code immer gleich groß
+%   |                                 +--------+ |
+%   | Ansprechpartner              Version       |
+%   +--------------------------------------------+
+%
+% Die Karte ist für A6 gezeichnet, für A7 wird sie auf 1/sqrt(2) verkleinert.
+% Titel, Status und Text wählen ihre Schriftgröße selbst (in festen Grenzen),
+% damit alles in die Felder passt.
+%
+% Druckbogen: DIN A4 (A6: quer, 2 x 2 Karten; A7: hoch, 2 x 4 Karten),
+% dazwischen Schnittlinien für die Schere. Beim Drucken "Tatsächliche Größe"
+% (100 %) wählen, nicht "An Seite anpassen".
+
+\usepackage{qrcode}
+\usepackage{ifthen}
+\usepackage{pifont}   % \ding{34}: Schere
+\usepackage{ragged2e} % Flattersatz mit Silbentrennung
+
+% ---------------------------------------------------------------------
+% Farben: Ampel, hell genug für schwarzen Text (Kontrast >= 7:1)
+% ---------------------------------------------------------------------
+\definecolor{ampelgruen}{HTML}{5CC97B}
+\definecolor{ampelgelb}{HTML}{FFD43B}
+\definecolor{ampelrot}{HTML}{FF6B5B}
+\definecolor{warnrot}{HTML}{C62828}   % Hervorhebung im Text, auch auf Gelb lesbar
+
+\newcommand{\red}[1]{\textcolor{warnrot}{#1}}
+\newcommand{\mail}[1]{\texttt{#1}}
+\newcommand{\web}[1]{\texttt{#1}}
+
+% ---------------------------------------------------------------------
+% Bogen und Karte
+% ---------------------------------------------------------------------
+\ifthenelse{\equal{\Schildformat}{A7}}{%
+	\geometry{a4paper, portrait, margin=0pt}
+	\newcommand{\Spalten}{2}\newcommand{\Zeilen}{4}   % Felder 105 x 74,25 mm
+	\newcommand{\Kartenfaktor}{0.7071}
+}{%
+	\geometry{a4paper, landscape, margin=0pt}
+	\newcommand{\Spalten}{2}\newcommand{\Zeilen}{2}   % Felder 148,5 x 105 mm
+	\newcommand{\Kartenfaktor}{1}
+}
+\pagestyle{empty}
+\fancyhf{}
+
+\title{Hinweisschilder \Schildformat}
+
+\newlength{\FeldBreite}
+\newlength{\FeldHoehe}
+\setlength{\FeldBreite}{\dimexpr\paperwidth/\Spalten\relax}
+\setlength{\FeldHoehe}{\dimexpr\paperheight/\Zeilen\relax}
+
+% Maße der Karte in mm, für A6 (Feld 148,5 x 105 mm, 5 mm Abstand zur
+% Schnittlinie, der zugleich als Druckrand reicht)
+\newcommand{\kB}{138.5}  % Kartenbreite
+\newcommand{\kH}{95}     % Kartenhöhe
+\newcommand{\kRand}{5}   % Innenabstand
+\newcommand{\qrGroesse}{28}
+\newcommand{\qrKasten}{36}  % Breite des weißen QR-Kastens
+
+% ---------------------------------------------------------------------
+% Text passend setzen: größte Schrift zwischen max und min, bei der der
+% Inhalt in Breite x Höhe passt. Ergebnis in \passendBox.
+% \passend{max pt}{min pt}{Breite}{Höhe}{Inhalt}
+% ---------------------------------------------------------------------
+\newsavebox{\passendBox}
+\newcommand{\passend}[5]{%
+	\def\passendGroesse{#1}%
+	\passendVersuch{#2}{#3}{#4}{#5}}
+\newcommand{\passendVersuch}[4]{%
+	\pgfmathsetmacro{\passendZeile}{1.2*\passendGroesse}%
+	\sbox{\passendBox}{\parbox[t]{\dimexpr#2\relax}{%
+		\fontsize{\passendGroesse pt}{\passendZeile pt}\selectfont\RaggedRight
+		\setlength{\parskip}{0.4\baselineskip}#4}}%
+	\ifdim\dimexpr\ht\passendBox+\dp\passendBox\relax>#3\relax
+		\ifdim\passendGroesse pt>#1pt
+			\pgfmathsetmacro{\passendGroesse}{max(#1,\passendGroesse-0.5)}%
+			\passendVersuch{#1}{#2}{#3}{#4}%
+		\fi
+	\fi}
+
+% ---------------------------------------------------------------------
+% QR-Code mit FabCube in der Mitte, erzeugt von LaTeX (Paket qrcode).
+% Fehlerkorrektur H, damit der Code trotz Logo lesbar bleibt.
+% ---------------------------------------------------------------------
+\newsavebox{\qrbox}
+\newcommand{\qrMitCube}[2]{% {Größe}{URL}
+	\sbox{\qrbox}{\qrcode[height=#1,level=H]{#2}}%
+	\usebox{\qrbox}%
+	\llap{\makebox[\wd\qrbox]{\raisebox{\dimexpr(\ht\qrbox-\dp\qrbox-\height+\depth)/2\relax}{%
+		\colorbox{white}{\includegraphics[width=0.22\wd\qrbox]{fab_cube.png}}}}}}
+
+% ---------------------------------------------------------------------
+% Optionen eines Schilds
+%   farbe=gruen|gelbgruen|gelb|gelbrot|rot   (Pflicht)
+%   modell=...        kleinere Zeile unter dem Titel
+%   einweisung=REPO   QR-Code auf das neueste Release von
+%                     github.com/fau-fablab/REPO (die Einweisung als PDF)
+%   seite=NAME        QR-Code auf https://fablab.fau.de/NAME
+%                     (nur WordPress-Permalinks verwenden)
+%   startseite        QR-Code auf https://fablab.fau.de
+%   kontakt=...       Ansprechpartner in der Fußzeile
+% ---------------------------------------------------------------------
+\newcommand{\standardKontakt}{FabLab-Aktive, \mail{kontakt@fablab.fau.de}}
+\pgfkeys{
+	/schild/.is family, /schild,
+	farbe/.store in=\schildFarbe,
+	modell/.store in=\schildModell,
+	kontakt/.store in=\schildKontakt,
+	einweisung/.code={%
+		\def\schildQR{https://github.com/fau-fablab/#1/releases/latest}%
+		\def\schildQRText{\textbf{Aktuelle Einweisung}\\ github.com/fau-fablab/\allowbreak #1}},
+	seite/.code={%
+		\def\schildQR{https://fablab.fau.de/#1}%
+		\def\schildQRText{\textbf{Mehr Infos}\\ fablab.fau.de/\allowbreak #1}},
+	startseite/.code={%
+		\def\schildQR{https://fablab.fau.de/}%
+		\def\schildQRText{\textbf{Mehr Infos}\\ fablab.fau.de}},
+}
+
+% Hintergrund (Ampelfarbe bzw. Verlauf) und Rahmen je Farbe
+\tikzset{
+	hintergrund gruen/.style={fill=ampelgruen},
+	hintergrund gelbgruen/.style={left color=ampelgelb, right color=ampelgruen},
+	hintergrund gelb/.style={fill=ampelgelb},
+	hintergrund gelbrot/.style={left color=ampelgelb, right color=ampelrot},
+	hintergrund rot/.style={fill=ampelrot},
+	rahmen gruen/.style={draw=ampelgruen!55!black},
+	rahmen gelbgruen/.style={draw=ampelgruen!55!black},
+	rahmen gelb/.style={draw=ampelgelb!50!black},
+	rahmen gelbrot/.style={draw=ampelrot!55!black},
+	rahmen rot/.style={draw=ampelrot!55!black},
+}
+% ---------------------------------------------------------------------
+% Die Karte
+% ---------------------------------------------------------------------
+\newsavebox{\titelBox}
+\newsavebox{\modellBox}
+\newsavebox{\statusBox}
+\newsavebox{\textBox}
+\newsavebox{\kontaktBox}
+\newsavebox{\qrTextBox}
+\newsavebox{\karteBox}
+
+% \karte{Titel}{Status}{Text}, Optionen in \schildFarbe usw.
+\newcommand{\karte}[3]{%
+	% Kopf
+	\pgfmathsetmacro{\kopfB}{\kB-2*\kRand}%
+	\ifx\schildModell\empty
+		\passend{26}{12}{\kopfB mm}{13mm}{\bfseries #1}\sbox{\titelBox}{\usebox{\passendBox}}%
+		\sbox{\modellBox}{}%
+		\def\statusY{-\kRand-15}%
+	\else
+		\passend{24}{12}{\kopfB mm}{10mm}{\bfseries #1}\sbox{\titelBox}{\usebox{\passendBox}}%
+		\passend{12}{7}{\kopfB mm}{5mm}{\schildModell}\sbox{\modellBox}{\usebox{\passendBox}}%
+		\def\statusY{-\kRand-17}%
+	\fi
+	\passend{16}{9}{\kopfB mm}{12mm}{\bfseries #2}\sbox{\statusBox}{\usebox{\passendBox}}%
+	% Mitte: Text, rechts daneben der QR-Kasten (falls vorhanden)
+	\pgfmathsetmacro{\mitteOben}{\statusY-15}%
+	\pgfmathsetmacro{\mitteH}{\kH+\mitteOben-\kRand-7}%
+	\ifx\schildQR\empty
+		\pgfmathsetmacro{\textB}{\kB-2*\kRand}%
+	\else
+		\pgfmathsetmacro{\textB}{\kB-2*\kRand-\qrKasten-4}%
+		\passend{7}{4}{\qrKasten mm-3mm}{8mm}{\centering\sffamily \schildQRText}%
+		\sbox{\qrTextBox}{\usebox{\passendBox}}%
+	\fi
+	\passend{15}{6}{\textB mm}{\mitteH mm}{#3}\sbox{\textBox}{\usebox{\passendBox}}%
+	% Fuß
+	\sbox{\kontaktBox}{\fontsize{8}{9.6}\selectfont Ansprechpartner: \schildKontakt}%
+	\pgfmathsetmacro{\kontaktB}{\kB-2*\kRand-45}%
+	\ifdim\wd\kontaktBox>\kontaktB mm
+		\sbox{\kontaktBox}{\resizebox{\kontaktB mm}{!}{\usebox{\kontaktBox}}}%
+	\fi
+	% Stil für Hintergrund und Rahmen, Farbname schon eingesetzt
+	\edef\karteStil{\noexpand\tikzset{karte/.style={hintergrund \schildFarbe, rahmen \schildFarbe}}}%
+	\karteStil
+	\sbox{\karteBox}{%
+	\begin{tikzpicture}[x=1mm, y=1mm, inner sep=0pt]
+		\path[use as bounding box] (0,0) rectangle (\kB,-\kH);
+		\path[karte, line width=1.2pt, rounded corners=3mm]
+			(0,0) rectangle (\kB,-\kH);
+		% Kopf
+		\node[anchor=north west] at (\kRand,-\kRand) {\usebox{\titelBox}};
+		\ifx\schildModell\empty\else
+			\node[anchor=north west] at (\kRand,-\kRand-11) {\usebox{\modellBox}};
+		\fi
+		\node[anchor=north west] at (\kRand,\statusY) {\usebox{\statusBox}};
+		\draw[black!70, line width=0.6pt] (\kRand,\mitteOben+2) -- (\kB-\kRand,\mitteOben+2);
+		% Mitte
+		\node[anchor=north west] at (\kRand,\mitteOben) {\usebox{\textBox}};
+		\ifx\schildQR\empty\else
+			\fill[white, rounded corners=2mm]
+				(\kB-\kRand-\qrKasten,\mitteOben) rectangle (\kB-\kRand,\mitteOben-\qrGroesse-14);
+			\node[anchor=north] at (\kB-\kRand-\qrKasten/2,\mitteOben-3)
+				{\qrMitCube{\qrGroesse mm}{\schildQR}};
+			\node[anchor=north] at (\kB-\kRand-\qrKasten/2,\mitteOben-\qrGroesse-4.5)
+				{\usebox{\qrTextBox}};
+		\fi
+		% Fuß
+		\node[anchor=base west] at (\kRand,-\kH+\kRand) {\usebox{\kontaktBox}};
+		\node[anchor=base east] at (\kB-\kRand,-\kH+\kRand)
+			{\fontsize{5}{6}\selectfont\color{black!70}\ttfamily
+				github.com/fau-fablab/hinweisschilder\ifdefined\Version, \Version\fi};
+	\end{tikzpicture}}%
+	}
+
+% ---------------------------------------------------------------------
+% Druckbogen: Karten der Reihe nach in die Felder legen
+% ---------------------------------------------------------------------
+\tikzset{schnittlinie/.style={gray, very thin, dash pattern=on 3mm off 2mm}}
+\newcommand{\schere}{\ding{34}}
+\pgfmathtruncatemacro{\letzteSpalte}{\Spalten-1}
+\pgfmathtruncatemacro{\letzteZeile}{\Zeilen-1}
+\AddToShipoutPictureBG{\AtPageLowerLeft{%
+	\begin{tikzpicture}[overlay]
+		\foreach \i in {1,...,\letzteSpalte} {
+			\draw[schnittlinie] (\i\FeldBreite,0) -- (\i\FeldBreite,\paperheight);
+			\node[fill=white, inner sep=1pt, text=gray, rotate=-90]
+				at (\i\FeldBreite,\paperheight-9mm) {\schere};
+		}
+		\foreach \j in {1,...,\letzteZeile} {
+			\draw[schnittlinie] (0,\j\FeldHoehe) -- (\paperwidth,\j\FeldHoehe);
+			\node[fill=white, inner sep=1pt, text=gray]
+				at (9mm,\j\FeldHoehe) {\schere};
+		}
+	\end{tikzpicture}}}
+
+\newcounter{schild}  % laufende Nummer, für die Box jedes Schilds
+\newcounter{feld}    % Feld auf dem aktuellen Bogen, von 0 an
+
+% Legt die Karte aus \karteBox in das nächste freie Feld.
+\newcommand{\karteAblegen}{%
+	\stepcounter{schild}%
+	\expandafter\newsavebox\csname schildbox\arabic{schild}\endcsname
+	\global\setbox\csname schildbox\arabic{schild}\endcsname\hbox{%
+		\scalebox{\Kartenfaktor}{\usebox{\karteBox}}}%
+	% Feldmitte: Spalte von links, Zeile von oben
+	\pgfmathtruncatemacro{\feldZeile}{floor(\thefeld/\Spalten)}%
+	\pgfmathtruncatemacro{\feldSpalte}{\thefeld-\feldZeile*\Spalten}%
+	\edef\schildAblegen{%
+		\noexpand\AddToShipoutPictureFG*{\noexpand\AtPageLowerLeft{%
+			\noexpand\tikz[overlay]\noexpand\node[inner sep=0pt] at
+				(\the\dimexpr\FeldBreite*\feldSpalte+\FeldBreite/2\relax,
+				 \the\dimexpr\paperheight-\FeldHoehe*\feldZeile-\FeldHoehe/2\relax)
+				{\noexpand\usebox{\expandafter\noexpand\csname schildbox\arabic{schild}\endcsname}};}}}%
+	\schildAblegen
+	\stepcounter{feld}%
+	\ifnum\value{feld}=\numexpr\Spalten*\Zeilen\relax
+		\null\newpage
+		\setcounter{feld}{0}%
+	\fi}
+% angefangenen letzten Bogen ausgeben
+\AtEndDocument{\ifnum\value{feld}>0 \null\fi}
+
+% ---------------------------------------------------------------------
+% \begin{schild}[Optionen]{Titel}{Status}
+%   Text (Absätze, Listen usw.)
+% \end{schild}
+% ---------------------------------------------------------------------
+\NewDocumentEnvironment{schild}{O{} m m +b}{%
+	\def\schildFarbe{gruen}\let\schildModell\empty\let\schildQR\empty
+	\let\schildKontakt\standardKontakt
+	\pgfkeys{/schild, #1}%
+	\karte{#2}{#3}{#4}%
+	\karteAblegen}{}
