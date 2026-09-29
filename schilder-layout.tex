@@ -121,13 +121,21 @@
 %                     (nur WordPress-Permalinks verwenden)
 %   startseite        QR-Code auf https://fablab.fau.de
 %   kontakt=...       Ansprechpartner in der Fußzeile
+%   symbole={M004, W017, GHS05}
+%                     Sicherheitszeichen (ISO 7010) und GHS-Piktogramme aus
+%                     fablab-document/ba-symbole, als Reihe unter dem Text
+%
+% Gelbe Schilder ohne Status bekommen einheitlich \statusGelb.
 % ---------------------------------------------------------------------
 \newcommand{\standardKontakt}{FabLab-Aktive, \mail{kontakt@fablab.fau.de}}
+\newcommand{\statusGelb}{Benutzung nur mit \red{unterschriebener} Einweisung}
+\newcommand{\symbolGroesse}{12}  % Höhe der Sicherheitszeichen in mm
 \pgfkeys{
 	/schild/.is family, /schild,
 	farbe/.store in=\schildFarbe,
 	modell/.store in=\schildModell,
 	kontakt/.store in=\schildKontakt,
+	symbole/.store in=\schildSymbole,
 	einweisung/.code={%
 		\def\schildEinweisung{#1}%
 		\def\schildQR{https://github.com/fau-fablab/#1/releases/latest}%
@@ -177,10 +185,18 @@
 		\passend{12}{7}{\kopfB mm}{5mm}{\schildModell}\sbox{\modellBox}{\usebox{\passendBox}}%
 		\def\statusY{-\kRand-17}%
 	\fi
-	\passend{16}{9}{\kopfB mm}{12mm}{\bfseries #2}\sbox{\statusBox}{\usebox{\passendBox}}%
+	\if\relax\detokenize{#2}\relax
+		\ifthenelse{\equal{\schildFarbe}{gelb}}{\def\schildStatus{\statusGelb}}{\def\schildStatus{}}%
+	\else
+		\def\schildStatus{#2}%
+	\fi
+	\passend{16}{9}{\kopfB mm}{12mm}{\bfseries \schildStatus}\sbox{\statusBox}{\usebox{\passendBox}}%
 	% Mitte: Text, rechts daneben der QR-Kasten (falls vorhanden)
 	\pgfmathsetmacro{\mitteOben}{\statusY-15}%
 	\pgfmathsetmacro{\mitteH}{\kH+\mitteOben-\kRand-7}%
+	\ifx\schildSymbole\empty\else
+		\pgfmathsetmacro{\mitteH}{\mitteH-\symbolGroesse-2}% Platz für die Symbolreihe
+	\fi
 	\ifx\schildQR\empty
 		\pgfmathsetmacro{\textB}{\kB-2*\kRand}%
 	\else
@@ -212,6 +228,11 @@
 		\draw[black!70, line width=0.6pt] (\kRand,\mitteOben+2) -- (\kB-\kRand,\mitteOben+2);
 		% Mitte
 		\node[anchor=north west] at (\kRand,\mitteOben) {\usebox{\textBox}};
+		\ifx\schildSymbole\empty\else
+			\foreach \symbol [count=\nr] in \schildSymbole
+				\node[anchor=south west] at ({\kRand+(\nr-1)*(\symbolGroesse+2)},{-\kH+\kRand+6})
+					{\includegraphics[height=\symbolGroesse mm]{\basedir/ba-symbole/\symbol}};
+		\fi
 		\ifx\schildQR\empty\else
 			\fill[white, rounded corners=2mm]
 				(\kB-\kRand-\qrKasten,\mitteOben) rectangle (\kB-\kRand,\mitteOben-\qrGroesse-14);
@@ -310,7 +331,7 @@
 % ---------------------------------------------------------------------
 \NewDocumentEnvironment{schild}{O{} m m +b}{%
 	\def\schildFarbe{gruen}\let\schildModell\empty\let\schildQR\empty
-	\let\schildEinweisung\empty\let\schildKontakt\standardKontakt
+	\let\schildEinweisung\empty\let\schildSymbole\empty\let\schildKontakt\standardKontakt
 	\pgfkeys{/schild, #1}%
 	\karte{#2}{#3}{#4}%
 	\karteSammeln}{}

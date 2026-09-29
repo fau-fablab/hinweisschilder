@@ -17,6 +17,9 @@
 %   gelbrot    nur mit Einweisung, Aufsicht erforderlich
 %   rot        nur nach Rücksprache bzw. gar nicht
 %
+% Gelbe Schilder mit leerem Status bekommen einheitlich "Benutzung nur mit
+% unterschriebener Einweisung".
+%
 % QR-Code: einweisung=REPO zeigt auf das neueste Release der Einweisung
 % (github.com/fau-fablab/REPO), sonst seite=... für fablab.fau.de.
 %
@@ -25,7 +28,6 @@
 
 \hyphenation{Be-treu-er Be-treu-er-in-nen Werk-statt-Ein-wei-sung Multi-funk-tions-tisch}
 
-\newcommand{\unterschriebeneEinweisung}{Benutzung nur mit \red{unterschriebener} Einweisung}
 \newcommand{\werkstattEinweisung}{Benutzung mit allgemeiner Werkstatt-Einweisung}
 
 % ---------------------------------------------------------------------
@@ -52,8 +54,8 @@ Je nach Einweisungsstufe sind bestimmte Tätigkeiten nur unter Aufsicht erlaubt.
 % ---------------------------------------------------------------------
 \begin{schild}[farbe=gelb, modell=LTT iLaser, einweisung=lasercutter-einweisung,
 	kontakt={AG Technik, \mail{kontakt@fablab.fau.de}}]
-	{Lasercutter}{Benutzung nur mit Einweisung}
-Unterschrift auf der Einweisungsliste speziell für dieses Gerät erforderlich.
+	{Lasercutter}{}
+Die Einweisung gilt nur für dieses Gerät (eigene Einweisungsliste).
 Bei Interesse frage einfach die Betreuer:innen!
 
 Einweisungen vor Oktober 2018 oder für den kleineren Lasercutter (Epilog Zing)
@@ -62,8 +64,8 @@ sind \textbf{hier nicht gültig}.
 
 \begin{schild}[farbe=gelb, modell=Epilog Zing, einweisung=lasercutter-einweisung,
 	kontakt={AG Technik, \mail{kontakt@fablab.fau.de}}]
-	{Lasercutter}{Benutzung nur mit Einweisung}
-Unterschrift auf der Einweisungsliste speziell für dieses Gerät erforderlich.
+	{Lasercutter}{}
+Die Einweisung gilt nur für dieses Gerät (eigene Einweisungsliste).
 Bei Interesse frage einfach die Betreuer:innen!
 
 Einweisungen für den großen Lasercutter (LTT iLaser) sind \textbf{hier nicht gültig}.
@@ -78,36 +80,32 @@ Wenn kein Rest passt, fange eine neue Platte an.
 \textbf{Die Preisliste hängt links neben der Tür.}
 \end{schild}
 
-\begin{schild}[farbe=gelb, modell=Ultimaker / Bambu, einweisung=3d-drucker-einweisung]
-	{FDM-3D-Drucker}{\unterschriebeneEinweisung}
+\begin{schild}[farbe=gelb, modell=Bambu Lab, einweisung=3d-drucker-einweisung]
+	{FDM-3D-Drucker}{}
 Bei Interesse frage die Betreuer:innen!
 \end{schild}
 
-\begin{schild}[farbe=gelb, modell=Ultimaker 3, einweisung=3d-drucker-einweisung]
-	{3D-Drucker}{\unterschriebeneEinweisung}
-Bei Interesse frage die Betreuer:innen!
-\end{schild}
-
-\begin{schild}[farbe=gelb, einweisung=sla-drucker-einweisung]
-	{SLA-Drucker}{Benutzung nur mit \red{unterschriebener} SLA-Einweisung}
+\begin{schild}[farbe=gelb, einweisung=sla-drucker-einweisung, symbole={M004, M009}]
+	{SLA-Drucker}{}
 Bei Interesse frage einfach die Betreuer:innen!
 \end{schild}
 
-\begin{schild}[farbe=gelb, modell=Formlabs Form Wash und Form Cure, einweisung=sla-drucker-einweisung]
-	{Waschen und Aushärten}{Benutzung nur mit \red{unterschriebener} SLA-Einweisung}
-Beim Umgang mit Resin und Isopropanol Schutzhandschuhe und Schutzbrille tragen!
+\begin{schild}[farbe=gelb, modell=Formlabs Form Wash und Form Cure, einweisung=sla-drucker-einweisung,
+	symbole={GHS05, GHS07, GHS08, GHS09, M004, M009}]
+	{Waschen und Aushärten}{}
+Es gilt die SLA-Einweisung.
 
 Bei Interesse frage einfach die Betreuer:innen!
 \end{schild}
 
 \begin{schild}[farbe=gelb, einweisung=schneideplotter-einweisung]
-	{Schneideplotter}{\unterschriebeneEinweisung}
+	{Schneideplotter}{}
 Bei Interesse frage einfach die Betreuer:innen!
 \end{schild}
 
-\begin{schild}[farbe=gelb, einweisung=schneideplotter-einweisung]
-	{T-Shirt-Presse}{Benutzung nur mit Schneideplotter-Einweisung}
-\textbf{Achtung, heiß!}
+\begin{schild}[farbe=gelb, einweisung=schneideplotter-einweisung, symbole={W017}]
+	{T-Shirt-Presse}{}
+Es gilt die Schneideplotter-Einweisung.
 
 Bei Interesse frage einfach die Betreuer:innen!
 \end{schild}
@@ -145,16 +143,14 @@ Bei Problemen bitte an Max B, Philipp oder Patrick wenden.
 \end{schild}
 
 \begin{schild}[farbe=gelb, einweisung=platinenaetzer-einweisung,
-	kontakt={Max, \mail{technik@fablab.fau.de}}]
-	{Platinenfertigung}{\unterschriebeneEinweisung}
-\textbf{Schutzbrille tragen!}
-
+	kontakt={Max, \mail{technik@fablab.fau.de}}, symbole={W023, M004, M009}]
+	{Platinenfertigung}{}
 Bei Interesse frage einfach die Betreuer:innen!
 \end{schild}
 
 \begin{schild}[farbe=gelb, einweisung=platinenaetzer-einweisung,
 	kontakt={Max, \mail{technik@fablab.fau.de}}]
-	{DuKo-Presse für Platinen}{Benutzung nur nach Einweisung}
+	{DuKo-Presse für Platinen}{}
 Vorsichtig verwenden! Das Werkzeug ist sehr empfindlich!
 
 Bei Interesse frage einfach die Betreuer:innen!
@@ -170,47 +166,16 @@ Bei Interesse wende dich bitte an Philipp!
 
 \begin{schild}[farbe=gelb, einweisung=reflow-ofen-einweisung,
 	kontakt={Julian, \mail{julian.neureuther@fablab.fau.de}}]
-	{Reflow-Ofen}{Selbstständige Benutzung nur mit \red{unterschriebener} Reflow-Ofen-Einweisung}
-\textbf{Nicht geeignet für Lebensmittel!}
+	{Lötpastendrucker}{}
+Es gilt die Reflow-Ofen-Einweisung.
 
 Bei Interesse frage einfach die Betreuer:innen!
 \end{schild}
 
-\begin{schild}[farbe=gelb, einweisung=reflow-ofen-einweisung,
-	kontakt={Julian, \mail{julian.neureuther@fablab.fau.de}}]
-	{Reflow-Ofen-Controller}{Selbstständige Benutzung nur mit \red{unterschriebener} Reflow-Ofen-Einweisung}
-Bei Interesse frage einfach die Betreuer:innen!
-\end{schild}
-
-\begin{schild}[farbe=gelb, einweisung=reflow-ofen-einweisung,
-	kontakt={Julian, \mail{julian.neureuther@fablab.fau.de}}]
-	{Lötpastendrucker}{Selbstständige Benutzung nur mit \red{unterschriebener} Reflow-Ofen-Einweisung}
-Bei Interesse frage einfach die Betreuer:innen!
-\end{schild}
-
-\begin{schild}[farbe=gelb, einweisung=reflow-ofen-einweisung,
-	kontakt={Julian, \mail{julian.neureuther@fablab.fau.de}}]
-	{Zubehör Reflow-Ofen}{Selbstständige Benutzung nur mit \red{unterschriebener} Reflow-Ofen-Einweisung}
-Inhalt:
-\begin{itemize}
-	\item Lötpaste (Abrechnung pro Gramm, vor und nach Benutzung abwiegen!)
-	\item Platinenstück zum Umrühren der Lötpaste
-	\item Rakel, ESD-Pinzette
-	\item K-Typ-Thermoelement für den Reflow-Controller
-	\item Gitterrostentnahmewerkzeug, USB-Kabel
-\end{itemize}
-\end{schild}
-
-\begin{schild}[farbe=gelb, modell=VaporPhase 1, einweisung=dampfphasenloetanlage-einweisung]
-	{Dampfphasen\-lötanlage}{\unterschriebeneEinweisung}
+\begin{schild}[farbe=gelb, modell=VaporPhase 1, einweisung=dampfphasenloetanlage-einweisung,
+	symbole={W017, M004, P022}]
+	{Dampfphasen\-lötanlage}{}
 Bei Interesse frage die Betreuer:innen!
-
-Arbeitsschutz beachten:
-\begin{itemize}
-	\item Schutzbrille tragen
-	\item Nicht essen oder trinken
-	\item Vorsicht, heiße Teile!
-\end{itemize}
 \end{schild}
 
 \begin{schild}[farbe=rot, modell=Siglent SSA3021X, kontakt={Markus F+W, \mail{kontakt@fablab.fau.de}}]
@@ -298,12 +263,12 @@ Bitte sprich mit den Betreuer:innen.
 \end{schild}
 
 \begin{schild}[farbe=gelb, modell=Festool OF 1010, einweisung=festool-oberfraese-einweisung]
-	{Oberfräse}{\unterschriebeneEinweisung}
+	{Oberfräse}{}
 Bei Interesse frage die Betreuer:innen!
 \end{schild}
 
 \begin{schild}[farbe=gelb, einweisung=shaper-origin-einweisung]
-	{Shaper Origin}{\unterschriebeneEinweisung}
+	{Shaper Origin}{}
 Bei Interesse frage die Betreuer:innen!
 \end{schild}
 
@@ -344,13 +309,13 @@ Bei Interesse frage die Betreuer:innen!
 \end{schild}
 
 % Festool-Handmaschinen und Zubehör (Issue #1)
-% \festool{Gerät}{Modell}{Hinweise}
-\newcommand{\festool}[3]{%
-\begin{schild}[farbe=gruen, modell={#2}, einweisung=werkstatt-einweisung]
-	{#1}{\werkstattEinweisung}
+% \festool[Symbole]{Gerät}{Modell}{Hinweise}
+\newcommand{\festool}[4][]{%
+\begin{schild}[farbe=gruen, modell={#3}, einweisung=werkstatt-einweisung, symbole={#1}]
+	{#2}{\werkstattEinweisung}
 Bei Unklarheiten frage die Betreuer:innen!
 
-#3
+#4
 
 Nach Benutzung vollständig in den Systainer zurücklegen.
 \end{schild}}
@@ -358,8 +323,8 @@ Nach Benutzung vollständig in den Systainer zurücklegen.
 \festool{Akkuschrauber}{Festool T 18+3}
 	{Akkus nach Benutzung wieder aufladen.}
 
-\festool{Stichsäge}{Festool CARVEX PS 420}
-	{Werkstück fest einspannen, Schutzbrille tragen.
+\festool[M004]{Stichsäge}{Festool CARVEX PS 420}
+	{Werkstück fest einspannen.
 	Passendes Sägeblatt für das Material verwenden.}
 
 \festool{Zubehör Stichsäge}{Festool CARVEX PS 420}
@@ -372,8 +337,8 @@ Nach Benutzung vollständig in den Systainer zurücklegen.
 \festool{Exzenterschleifer}{Festool ROTEX RO 150}
 	{Nur mit angeschlossener Absaugung schleifen.}
 
-\festool{Oszillierer}{Festool VECTURO OS 400}
-	{Werkstück fest einspannen, Schutzbrille tragen.}
+\festool[M004]{Oszillierer}{Festool VECTURO OS 400}
+	{Werkstück fest einspannen.}
 
 \festool{Anschlagschienen\-zubehör}{Festool}
 	{Zubehör für die Führungs- und Anschlagschienen.}
@@ -392,34 +357,29 @@ Für Gröberes haben wir den Fein-Bohrschleifer.
 Wende dich bei Unklarheiten bitte an die Betreuer:innen!
 \end{schild}
 
-\begin{schild}[farbe=gruen]
+\begin{schild}[farbe=gruen, symbole={W017}]
 	{Heißluftfön}{Benutzung mit Verstand}
 Unbedingt nach Benutzung auf \texttt{Stufe 1} laufend abkühlen lassen.
 
-Wird sehr \textbf{heiß}! Wende dich bei Unklarheiten an die Betreuer:innen.
+Wende dich bei Unklarheiten an die Betreuer:innen.
 \end{schild}
 
 \begin{schild}[farbe=gelb, einweisung=ultraschallbad-einweisung,
 	kontakt={FabLab-Aktive, \mail{technik@fablab.fau.de}}]
-	{Ultraschallbad}{Benutzung nur nach Einweisung}
+	{Ultraschallbad}{}
 Bitte wende dich an die Betreuer:innen.
-\end{schild}
-
-\begin{schild}[farbe=gruen]
-	{Vakuumofen}{Nicht verschmutzen}
-Wende dich bei Unklarheiten an die Betreuer:innen.
 \end{schild}
 
 % ---------------------------------------------------------------------
 % Textil
 % ---------------------------------------------------------------------
 \begin{schild}[farbe=gelb, modell=Brother VR, einweisung=stickmaschine-einweisung]
-	{Stickmaschine}{\unterschriebeneEinweisung}
+	{Stickmaschine}{}
 Bei Interesse frage die Betreuer:innen!
 \end{schild}
 
 \begin{schild}[farbe=gelb, modell=Pfaff 260, einweisung=naehmaschine-einweisung]
-	{Nähmaschine}{\unterschriebeneEinweisung}
+	{Nähmaschine}{}
 Bei Interesse frage die Betreuer:innen!
 \end{schild}
 
@@ -455,18 +415,6 @@ Akku nach Benutzung aufladen und die Kamera vollständig zurücklegen.
 	{Fundsachenkiste}{Alles mit \enquote{FFA} Beschriftete ist zu verschenken. Der Rest sind Fundsachen.}
 Hier landet der auf Tischen liegengelassene Schrott. Die Kiste wird nach jedem
 FabLab-Treffen stark aussortiert und der Großteil weggeschmissen.
-\end{schild}
-
-\begin{schild}[farbe=rot]
-	{Lagerplatz}{Nur für Betreuer:innen oder nach Rücksprache}
-Lagerplatz ist extrem knapp! Alle Dinge müssen deshalb in einer \emph{stapelfähigen,
-mit Namen beschrifteten} Kiste gelagert werden.
-
-Nicht-Betreuer:innen können nach Rücksprache für einen begrenzten Zeitraum Dinge
-lagern, müssen die Kiste aber lesbar mit Name, Mail und Enddatum beschriften.
-
-Teile mit abgelaufenem Enddatum oder fehlender Beschriftung gelten als Spende an das
-FabLab und können jederzeit verschwinden.
 \end{schild}
 
 % Generisches Schild
