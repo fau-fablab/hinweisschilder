@@ -33,6 +33,7 @@
 \usepackage{ifthen}
 \usepackage{pifont}   % \ding{34}: Schere
 \usepackage{ragged2e} % Flattersatz mit Silbentrennung
+\usepackage{etoolbox} % Listen für die Sortierung
 
 % ---------------------------------------------------------------------
 % Farben: Ampel, hell genug für schwarzen Text (Kontrast >= 7:1)
@@ -128,6 +129,7 @@
 	modell/.store in=\schildModell,
 	kontakt/.store in=\schildKontakt,
 	einweisung/.code={%
+		\def\schildEinweisung{#1}%
 		\def\schildQR{https://github.com/fau-fablab/#1/releases/latest}%
 		\def\schildQRText{\textbf{Aktuelle Einweisung}\\ github.com/fau-fablab/\allowbreak #1}},
 	seite/.code={%
@@ -227,7 +229,7 @@
 	}
 
 % ---------------------------------------------------------------------
-% Druckbogen: Karten der Reihe nach in die Felder legen
+% Druckbogen: Schnittlinien und Verteilung der Karten auf die Felder
 % ---------------------------------------------------------------------
 \tikzset{schnittlinie/.style={gray, very thin, dash pattern=on 3mm off 2mm}}
 \newcommand{\schere}{\ding{34}}
@@ -250,12 +252,31 @@
 \newcounter{schild}  % laufende Nummer, für die Box jedes Schilds
 \newcounter{feld}    % Feld auf dem aktuellen Bogen, von 0 an
 
-% Legt die Karte aus \karteBox in das nächste freie Feld.
-\newcommand{\karteAblegen}{%
+% Sortierung: Die Karten werden erst gesammelt und am Ende gruppiert auf die
+% Bögen gelegt, jede Gruppe beginnt auf einem neuen Bogen:
+%   1. eigene Einweisung (einweisung=... außer werkstatt-einweisung)
+%   2. allgemeine Werkstatt-Einweisung (einweisung=werkstatt-einweisung)
+%   3. ohne Einweisung
+% Innerhalb einer Gruppe bleibt die Reihenfolge aus schilder.tex.
+\newcommand{\gruppeEigene}{}
+\newcommand{\gruppeWerkstatt}{}
+\newcommand{\gruppeOhne}{}
+
+% Speichert die Karte aus \karteBox und merkt sie in ihrer Gruppe vor.
+\newcommand{\karteSammeln}{%
 	\stepcounter{schild}%
 	\expandafter\newsavebox\csname schildbox\arabic{schild}\endcsname
 	\global\setbox\csname schildbox\arabic{schild}\endcsname\hbox{%
 		\scalebox{\Kartenfaktor}{\usebox{\karteBox}}}%
+	\ifx\schildEinweisung\empty
+		\listxadd\gruppeOhne{\arabic{schild}}%
+	\else\ifthenelse{\equal{\schildEinweisung}{werkstatt-einweisung}}
+		{\listxadd\gruppeWerkstatt{\arabic{schild}}}
+		{\listxadd\gruppeEigene{\arabic{schild}}}%
+	\fi}
+
+% Legt Karte Nr. #1 in das nächste freie Feld.
+\newcommand{\karteAblegen}[1]{%
 	% Feldmitte: Spalte von links, Zeile von oben
 	\pgfmathtruncatemacro{\feldZeile}{floor(\thefeld/\Spalten)}%
 	\pgfmathtruncatemacro{\feldSpalte}{\thefeld-\feldZeile*\Spalten}%
@@ -264,15 +285,23 @@
 			\noexpand\tikz[overlay]\noexpand\node[inner sep=0pt] at
 				(\the\dimexpr\FeldBreite*\feldSpalte+\FeldBreite/2\relax,
 				 \the\dimexpr\paperheight-\FeldHoehe*\feldZeile-\FeldHoehe/2\relax)
-				{\noexpand\usebox{\expandafter\noexpand\csname schildbox\arabic{schild}\endcsname}};}}}%
+				{\noexpand\usebox{\expandafter\noexpand\csname schildbox#1\endcsname}};}}}%
 	\schildAblegen
 	\stepcounter{feld}%
 	\ifnum\value{feld}=\numexpr\Spalten*\Zeilen\relax
 		\null\newpage
 		\setcounter{feld}{0}%
 	\fi}
-% angefangenen letzten Bogen ausgeben
-\AtEndDocument{\ifnum\value{feld}>0 \null\fi}
+% angefangenen Bogen ausgeben, damit die nächste Gruppe neu beginnt
+\newcommand{\bogenAbschliessen}{%
+	\ifnum\value{feld}>0 \null\newpage\setcounter{feld}{0}\fi}
+\newcommand{\gruppeAblegen}[1]{%
+	\forlistloop{\karteAblegen}{#1}%
+	\bogenAbschliessen}
+\AtEndDocument{%
+	\gruppeAblegen{\gruppeEigene}%
+	\gruppeAblegen{\gruppeWerkstatt}%
+	\gruppeAblegen{\gruppeOhne}}
 
 % ---------------------------------------------------------------------
 % \begin{schild}[Optionen]{Titel}{Status}
@@ -281,7 +310,7 @@
 % ---------------------------------------------------------------------
 \NewDocumentEnvironment{schild}{O{} m m +b}{%
 	\def\schildFarbe{gruen}\let\schildModell\empty\let\schildQR\empty
-	\let\schildKontakt\standardKontakt
+	\let\schildEinweisung\empty\let\schildKontakt\standardKontakt
 	\pgfkeys{/schild, #1}%
 	\karte{#2}{#3}{#4}%
-	\karteAblegen}{}
+	\karteSammeln}{}
