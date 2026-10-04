@@ -262,12 +262,13 @@ Im Moment gibt es leider noch keine Einweisung zu diesem Gerät.
 Bitte sprich mit den Betreuer:innen.
 \end{schild}
 
-\begin{schild}[farbe=gelb, modell=Festool OF 1010, einweisung=festool-oberfraese-einweisung]
+\begin{schild}[farbe=gelb, modell=Festool OF 1010, einweisung=festool-oberfraese-einweisung, systainer]
 	{Oberfräse}{}
 Bei Interesse frage die Betreuer:innen!
 \end{schild}
 
-\begin{schild}[farbe=gelb, modell=Festool DOMINO DF 500 RQ-Plus, einweisung=festool-duebelfraese-einweisung]
+\begin{schild}[farbe=gelb, modell=Festool DOMINO DF 500 RQ-Plus, einweisung=festool-duebelfraese-einweisung,
+	systainer]
 	{Dübelfräse}{}
 Bei Interesse frage die Betreuer:innen!
 \end{schild}
@@ -286,7 +287,7 @@ werden. Sobald es eine Einweisung gibt, wird dieses Schild ersetzt und eine norm
 Benutzung wird mit unterschriebener Einweisung möglich sein. Bei der Benutzung sind die
 Sicherheitsregeln aus der Anleitung zu befolgen.}
 
-\begin{schild}[farbe=rot, modell=Festool TS 55 R, einweisung=festool-kreissaege-einweisung,
+\begin{schild}[farbe=rot, modell=Festool TS 55 R, einweisung=festool-kreissaege-einweisung, systainer,
 	kontakt={Philipp, \mail{technik@fablab.fau.de}}]
 	{Tauchsäge}{\erprobungsbetriebEins}
 \erprobungsbetriebZwei
@@ -313,10 +314,10 @@ Bei Interesse frage die Betreuer:innen!
 Bei Interesse frage die Betreuer:innen!
 \end{schild}
 
-% Festool-Handmaschinen und Zubehör (Issue #1)
+% Festool-Handmaschinen und Zubehör (Issue #1), auch als Systainer-Etikett
 % \festool[Symbole]{Gerät}{Modell}{Hinweise}
 \newcommand{\festool}[4][]{%
-\begin{schild}[farbe=gruen, modell={#3}, einweisung=werkstatt-einweisung, symbole={#1}]
+\begin{schild}[farbe=gruen, modell={#3}, einweisung=werkstatt-einweisung, symbole={#1}, systainer]
 	{#2}{\werkstattEinweisung}
 Bei Unklarheiten frage die Betreuer:innen!
 

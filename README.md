@@ -20,6 +20,15 @@ Die Schilder gibt es in zwei Größen, jeweils als DIN-A4-Bögen zum Ausschneide
 - `hinweisschilder-a6.pdf`: DIN A6, 4 Schilder pro Bogen (A4 quer)
 - `hinweisschilder-a7.pdf`: DIN A7, 8 Schilder pro Bogen (A4 hoch)
 
+Für die Festool-Geräte gibt es zusätzlich Etiketten, die genau in das Beschriftungsfeld
+der Systainer passen (Systainer³ M/L und T-Loc, 85,72 × 54,03 mm wie die
+[Festool-Vorlage](https://www.festool.com/knowledge/systainer-labels)):
+
+- `hinweisschilder-systainer.pdf`: 10 Etiketten pro Bogen (A4 hoch), direkt aneinander,
+  Schnittmarken im Rand. Kompaktes Layout ohne Ansprechpartner.
+
+Welche Schilder als Etikett erscheinen, steuert die Option `systainer` in `schilder.tex`.
+
 Beim Drucken **tatsächliche Größe (100 %)** wählen, nicht „An Seite anpassen“.
 
 Die Schilder stehen in `schilder.tex`, Aufbau und Farben in `schilder-layout.tex`.
@@ -31,6 +40,7 @@ Die neueste Version aus [GitHub](https://github.com/fau-fablab/hinweisschilder) 
 
 - [Hinweisschilder DIN A6](https://brain.fablab.fau.de/build/hinweisschilder/hinweisschilder-a6.pdf)
 - [Hinweisschilder DIN A7](https://brain.fablab.fau.de/build/hinweisschilder/hinweisschilder-a7.pdf)
+- [Systainer-Etiketten](https://brain.fablab.fau.de/build/hinweisschilder/hinweisschilder-systainer.pdf)
 
 Außerdem baut eine GitHub Action die PDFs bei jedem Push. Auf dem Hauptbranch entsteht dabei ein
 [Release](https://github.com/fau-fablab/hinweisschilder/releases) mit Datums-Version (`vJJJJ.MM.TT`) und den PDFs.
