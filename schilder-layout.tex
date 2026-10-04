@@ -3,10 +3,10 @@
 % CC-BY-SA 3.0
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% Gemeinsame Präambel der Hinweisschilder. Wird von hinweisschilder-a6.tex
-% und hinweisschilder-a7.tex nach \documentclass eingebunden, vorher muss
-% \Schildformat (A6 oder A7) definiert sein. Die Schilder selbst stehen in
-% schilder.tex.
+% Gemeinsame Präambel der Hinweisschilder. Wird von hinweisschilder-a6.tex,
+% hinweisschilder-a7.tex und hinweisschilder-systainer.tex nach \documentclass
+% eingebunden, vorher muss \Schildformat (A6, A7 oder Systainer) definiert sein.
+% Die Schilder selbst stehen in schilder.tex.
 %
 % Jedes Schild ist eine Karte im Querformat mit festem Aufbau:
 %
@@ -28,6 +28,11 @@
 % Druckbogen: DIN A4 (A6: quer, 2 x 2 Karten; A7: hoch, 2 x 4 Karten),
 % dazwischen Schnittlinien für die Schere. Beim Drucken "Tatsächliche Größe"
 % (100 %) wählen, nicht "An Seite anpassen".
+%
+% Systainer: Etiketten für das Beschriftungsfeld der Festool-Systainer
+% (Systainer³ M/L und T-Loc), 85,72 x 54,03 mm wie die Festool-Vorlage.
+% Eigenes, kompaktes Layout; nur Schilder mit der Option "systainer".
+% 2 x 5 Etiketten pro A4-Bogen, direkt aneinander, Schnittmarken im Rand.
 
 \usepackage[nolinks]{qrcode} % keine Link-Rahmen um die QR-Codes
 \usepackage{ifthen}
@@ -50,15 +55,21 @@
 % ---------------------------------------------------------------------
 % Bogen und Karte
 % ---------------------------------------------------------------------
+\newif\ifSystainer
+\ifthenelse{\equal{\Schildformat}{Systainer}}{\Systainertrue}{}
 \ifthenelse{\equal{\Schildformat}{A7}}{%
 	\geometry{a4paper, portrait, margin=0pt, hoffset=0pt, voffset=0pt}
 	\newcommand{\Spalten}{2}\newcommand{\Zeilen}{4}   % Felder 105 x 74,25 mm
 	\newcommand{\Kartenfaktor}{0.7071}
-}{%
+}{\ifSystainer
+	\geometry{a4paper, portrait, margin=0pt, hoffset=0pt, voffset=0pt}
+	\newcommand{\Spalten}{2}\newcommand{\Zeilen}{5}   % Felder = Etiketten
+	\newcommand{\Kartenfaktor}{1}
+\else
 	\geometry{a4paper, landscape, margin=0pt, hoffset=0pt, voffset=0pt}
 	\newcommand{\Spalten}{2}\newcommand{\Zeilen}{2}   % Felder 148,5 x 105 mm
 	\newcommand{\Kartenfaktor}{1}
-}
+\fi}
 \pagestyle{empty}
 \fancyhf{}
 % fablab-document.cls verschiebt die Seite mit \hoffset/\voffset; eso-pic
@@ -68,8 +79,17 @@
 
 \newlength{\FeldBreite}
 \newlength{\FeldHoehe}
-\setlength{\FeldBreite}{\dimexpr\paperwidth/\Spalten\relax}
-\setlength{\FeldHoehe}{\dimexpr\paperheight/\Zeilen\relax}
+\newlength{\RandX}  % Abstand des Rasters vom Papierrand
+\newlength{\RandY}
+\ifSystainer
+	\setlength{\FeldBreite}{85.72mm}
+	\setlength{\FeldHoehe}{54.03mm}
+\else
+	\setlength{\FeldBreite}{\dimexpr\paperwidth/\Spalten\relax}
+	\setlength{\FeldHoehe}{\dimexpr\paperheight/\Zeilen\relax}
+\fi
+\setlength{\RandX}{\dimexpr(\paperwidth-\Spalten\FeldBreite)/2\relax}
+\setlength{\RandY}{\dimexpr(\paperheight-\Zeilen\FeldHoehe)/2\relax}
 
 % Maße der Karte in mm, für A6 (Feld 148,5 x 105 mm, 6,5 mm Abstand zur
 % Schnittlinie; bei A7 bleiben so 4,6 mm, genug Rand für übliche Drucker)
@@ -124,6 +144,8 @@
 %   symbole={M004, W017, GHS05}
 %                     Sicherheitszeichen (ISO 7010) und GHS-Piktogramme aus
 %                     fablab-document/ba-symbole, als Reihe unter dem Text
+%   systainer         auch als Etikett für den Systainer
+%                     (hinweisschilder-systainer.pdf)
 %
 % Gelbe Schilder ohne Status bekommen einheitlich \statusGelb.
 % ---------------------------------------------------------------------
@@ -136,6 +158,7 @@
 	modell/.store in=\schildModell,
 	kontakt/.store in=\schildKontakt,
 	symbole/.store in=\schildSymbole,
+	systainer/.code={\def\schildSystainer{1}},
 	einweisung/.code={%
 		\def\schildEinweisung{#1}%
 		\def\schildQR{https://github.com/fau-fablab/#1/releases/latest}%
@@ -250,12 +273,99 @@
 	}
 
 % ---------------------------------------------------------------------
+% Systainer-Etikett, 85,72 x 54,03 mm: gleicher Aufbau wie die Karte, aber
+% kompakter, ohne Ansprechpartner und ohne Rahmen (geschnitten wird an der
+% Kante). Text und QR-Code teilen sich die untere Hälfte.
+% ---------------------------------------------------------------------
+\newcommand{\eB}{85.72} % Etikettbreite
+\newcommand{\eH}{54.03} % Etiketthöhe
+\newcommand{\eRand}{3}
+\newcommand{\eQR}{17}     % Größe des QR-Codes
+\newcommand{\eQRKasten}{21}
+\newcommand{\eSymbol}{7}  % Höhe der Sicherheitszeichen
+\newcommand{\karteSystainer}[3]{%
+	\pgfmathsetmacro{\kopfB}{\eB-2*\eRand}%
+	\ifx\schildModell\empty
+		\passend{15}{9}{\kopfB mm}{7mm}{\bfseries #1}\sbox{\titelBox}{\usebox{\passendBox}}%
+		\sbox{\modellBox}{}%
+		\def\statusY{-\eRand-7.5}%
+	\else
+		\passend{14}{9}{\kopfB mm}{6mm}{\bfseries #1}\sbox{\titelBox}{\usebox{\passendBox}}%
+		\passend{7}{5}{\kopfB mm}{3mm}{\schildModell}\sbox{\modellBox}{\usebox{\passendBox}}%
+		\def\statusY{-\eRand-10}%
+	\fi
+	\if\relax\detokenize{#2}\relax
+		\ifthenelse{\equal{\schildFarbe}{gelb}}{\def\schildStatus{\statusGelb}}{\def\schildStatus{}}%
+	\else
+		\def\schildStatus{#2}%
+	\fi
+	\passend{8}{5.5}{\kopfB mm}{6.5mm}{\bfseries \schildStatus}\sbox{\statusBox}{\usebox{\passendBox}}%
+	\pgfmathsetmacro{\mitteOben}{\statusY-7.5}%
+	\pgfmathsetmacro{\mitteH}{\eH+\mitteOben-\eRand-2.5}%
+	\ifx\schildSymbole\empty\else
+		\pgfmathsetmacro{\mitteH}{\mitteH-\eSymbol-1}%
+	\fi
+	\ifx\schildQR\empty
+		\pgfmathsetmacro{\textB}{\eB-2*\eRand}%
+	\else
+		\pgfmathsetmacro{\textB}{\eB-2*\eRand-\eQRKasten-2}%
+		\passend{4.5}{3}{\eQRKasten mm-1.5mm}{4.5mm}{\centering\sffamily \schildQRText}%
+		\sbox{\qrTextBox}{\usebox{\passendBox}}%
+	\fi
+	\passend{8}{5}{\textB mm}{\mitteH mm}{#3}\sbox{\textBox}{\usebox{\passendBox}}%
+	\edef\karteStil{\noexpand\tikzset{karte/.style={hintergrund \schildFarbe}}}%
+	\karteStil
+	\sbox{\karteBox}{%
+	\begin{tikzpicture}[x=1mm, y=1mm, inner sep=0pt]
+		\path[use as bounding box] (0,0) rectangle (\eB,-\eH);
+		\path[karte] (0,0) rectangle (\eB,-\eH);
+		\node[anchor=north west] at (\eRand,-\eRand) {\usebox{\titelBox}};
+		\ifx\schildModell\empty\else
+			\node[anchor=north west] at (\eRand,-\eRand-6.5) {\usebox{\modellBox}};
+		\fi
+		\node[anchor=north west] at (\eRand,\statusY) {\usebox{\statusBox}};
+		\draw[black!70, line width=0.4pt] (\eRand,\mitteOben+1.2) -- (\eB-\eRand,\mitteOben+1.2);
+		\node[anchor=north west] at (\eRand,\mitteOben) {\usebox{\textBox}};
+		\ifx\schildSymbole\empty\else
+			\foreach \symbol [count=\nr] in \schildSymbole
+				\node[anchor=south west] at ({\eRand+(\nr-1)*(\eSymbol+1.5)},{-\eH+\eRand+2.5})
+					{\includegraphics[height=\eSymbol mm]{\basedir/ba-symbole/\symbol}};
+		\fi
+		\ifx\schildQR\empty\else
+			\fill[white, rounded corners=1.5mm]
+				(\eB-\eRand-\eQRKasten,\mitteOben) rectangle (\eB-\eRand,\mitteOben-\eQR-7);
+			\node[anchor=north] at (\eB-\eRand-\eQRKasten/2,\mitteOben-1.5)
+				{\qrMitCube{\eQR mm}{\schildQR}};
+			\node[anchor=north] at (\eB-\eRand-\eQRKasten/2,\mitteOben-\eQR-2)
+				{\usebox{\qrTextBox}};
+		\fi
+		\node[anchor=base west] at (\eRand,-\eH+\eRand-0.8)
+			{\fontsize{3.5}{4}\selectfont\color{black!70}\ttfamily
+				github.com/fau-fablab/hinweisschilder\ifdefined\Version, \Version\fi};
+	\end{tikzpicture}}%
+	}
+
+% ---------------------------------------------------------------------
 % Druckbogen: Schnittlinien und Verteilung der Karten auf die Felder
 % ---------------------------------------------------------------------
 \tikzset{schnittlinie/.style={gray, very thin, dash pattern=on 3mm off 2mm}}
 \newcommand{\schere}{\ding{34}}
 \pgfmathtruncatemacro{\letzteSpalte}{\Spalten-1}
 \pgfmathtruncatemacro{\letzteZeile}{\Zeilen-1}
+\ifSystainer
+% Etiketten liegen direkt aneinander: durchgehende Linien an allen Kanten,
+% sichtbar bleiben sie im Rand als Schnittmarken
+\AddToShipoutPictureBG{\AtPageLowerLeft{%
+	\begin{tikzpicture}[overlay]
+		\foreach \i in {0,...,\Spalten}
+			\draw[gray, very thin] (\RandX+\i\FeldBreite,0) -- (\RandX+\i\FeldBreite,\paperheight);
+		\foreach \j in {0,...,\Zeilen}
+			\draw[gray, very thin] (0,\RandY+\j\FeldHoehe) -- (\paperwidth,\RandY+\j\FeldHoehe);
+		\node[anchor=south, text=gray, font=\sffamily\scriptsize] at (\paperwidth/2,\RandY/2-1mm)
+			{\schere\ Etiketten für Festool-Systainer, 85,72 x 54,03 mm.
+			Drucken in tatsächlicher Größe (100\,\%), an den Linien schneiden.};
+	\end{tikzpicture}}}
+\else
 \AddToShipoutPictureBG{\AtPageLowerLeft{%
 	\begin{tikzpicture}[overlay]
 		\foreach \i in {1,...,\letzteSpalte} {
@@ -269,6 +379,7 @@
 				at (9mm,\j\FeldHoehe) {\schere};
 		}
 	\end{tikzpicture}}}
+\fi
 
 \newcounter{schild}  % laufende Nummer, für die Box jedes Schilds
 \newcounter{feld}    % Feld auf dem aktuellen Bogen, von 0 an
@@ -304,8 +415,8 @@
 	\edef\schildAblegen{%
 		\noexpand\AddToShipoutPictureFG*{\noexpand\AtPageLowerLeft{%
 			\noexpand\tikz[overlay]\noexpand\node[inner sep=0pt] at
-				(\the\dimexpr\FeldBreite*\feldSpalte+\FeldBreite/2\relax,
-				 \the\dimexpr\paperheight-\FeldHoehe*\feldZeile-\FeldHoehe/2\relax)
+				(\the\dimexpr\RandX+\FeldBreite*\feldSpalte+\FeldBreite/2\relax,
+				 \the\dimexpr\paperheight-\RandY-\FeldHoehe*\feldZeile-\FeldHoehe/2\relax)
 				{\noexpand\usebox{\expandafter\noexpand\csname schildbox#1\endcsname}};}}}%
 	\schildAblegen
 	\stepcounter{feld}%
@@ -316,13 +427,15 @@
 % angefangenen Bogen ausgeben, damit die nächste Gruppe neu beginnt
 \newcommand{\bogenAbschliessen}{%
 	\ifnum\value{feld}>0 \null\newpage\setcounter{feld}{0}\fi}
+% Systainer-Etiketten am Stück, ohne neuen Bogen je Gruppe (spart Papier)
 \newcommand{\gruppeAblegen}[1]{%
 	\forlistloop{\karteAblegen}{#1}%
-	\bogenAbschliessen}
+	\ifSystainer\else\bogenAbschliessen\fi}
 \AtEndDocument{%
 	\gruppeAblegen{\gruppeEigene}%
 	\gruppeAblegen{\gruppeWerkstatt}%
-	\gruppeAblegen{\gruppeOhne}}
+	\gruppeAblegen{\gruppeOhne}%
+	\bogenAbschliessen}
 
 % ---------------------------------------------------------------------
 % \begin{schild}[Optionen]{Titel}{Status}
@@ -332,6 +445,14 @@
 \NewDocumentEnvironment{schild}{O{} m m +b}{%
 	\def\schildFarbe{gruen}\let\schildModell\empty\let\schildQR\empty
 	\let\schildEinweisung\empty\let\schildSymbole\empty\let\schildKontakt\standardKontakt
+	\let\schildSystainer\empty
 	\pgfkeys{/schild, #1}%
-	\karte{#2}{#3}{#4}%
-	\karteSammeln}{}
+	\ifSystainer
+		\ifx\schildSystainer\empty\else
+			\karteSystainer{#2}{#3}{#4}%
+			\karteSammeln
+		\fi
+	\else
+		\karte{#2}{#3}{#4}%
+		\karteSammeln
+	\fi}{}
